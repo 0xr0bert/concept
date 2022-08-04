@@ -1,4 +1,6 @@
-@main def hello: Unit = 
+package dev.r0bert.concept
+
+@main def hello: Unit =
   println("Hello world!")
   println(msg)
 
