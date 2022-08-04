@@ -1,6 +1,7 @@
 package dev.r0bert.concept
 
 import scopt.OParser
+import java.io.File
 
 @main def main(args: String*): Unit =
   val builder = OParser.builder[CLIConfig]
@@ -14,17 +15,25 @@ import scopt.OParser
       help('h', "help")
         .text("Print this help message"),
       opt[Unit]('L', "copyright")
-        .action((_, c) => c.copy(copyright = true))
-        .text("Print the copyright information and exit")
+        .action((_, c) =>
+          println(license)
+          sys.exit(0)
+        )
+        .text("Print the copyright information and exit"),
+      opt[File]('b', "behaviours")
+        .required()
+        .valueName("<file>")
+        .action((f, c) => c.copy(behavioursTOML = f))
+        .text("The behaviours config TOML file, see behaviours.toml(5)")
+        .validate(file =>
+          if (file.exists) success else failure(s"$file does not exist")
+        )
     )
 
   OParser.parse(parser, args, CLIConfig()) match {
-    case Some(config) if config.copyright =>
-      println(license)
     case Some(config) =>
       println("Valid")
     case None =>
-      println("Not valid")
   }
 
 def license = """Copyright (c) 2022, Robert Greener
