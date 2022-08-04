@@ -1,0 +1,39 @@
+= behaviours.toml(5)
+Robert Greener
+v0.0.1
+:doctype: manpage
+:manmanual: Concepts Manual
+:mansource: behaviours
+:man-linkstyle: pass:[blue R < >]
+
+== Name
+
+behaviours.toml - A TOML file used for describing the beliefs used in concept(1).
+
+== Description
+
+The behaviours.toml(5) configuration file specifies the beliefs which are used in the concept(1) simulation.
+
+An example behaviours.toml.example should have been provided with his application.
+
+This is a valid TOML file.
+
+The file is a takes the format of repeated entries of:
+
+----
+[[behaviours]]
+name = "Behaviour 1"
+UUID = "d0f5efd5-a148-44d1-8490-4cc58e7cb4e1"
+----
+
+== Fields
+
+Each entry in the `[[behaviours]]` array contains `name` and (optionally) `UUID`.
+
+*name*::
+    Required.
+    The name of the behaviour.
+
+*UUID*::
+    Optional.
+    The UUID of the behaviour. If not specified it is randomly generated.
