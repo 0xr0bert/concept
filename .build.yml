@@ -1,0 +1,10 @@
+image: archlinux
+packages:
+  - sbt
+  - scala3
+sources:
+  - https://git.sr.ht/~ragreener1/concept
+tasks:
+  - test: |
+      cd concept
+      sbt clean test
