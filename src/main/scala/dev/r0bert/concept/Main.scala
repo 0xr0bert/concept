@@ -25,8 +25,8 @@ import scala.io.Source
       opt[File]('b', "behaviours")
         .required()
         .valueName("<file>")
-        .action((f, c) => c.copy(behavioursTOML = f))
-        .text("The behaviours config TOML file, see behaviours.toml(5)")
+        .action((f, c) => c.copy(behavioursJSON = f))
+        .text("The behaviours config JSON file, see behaviours.json(5)")
         .validate(file =>
           if (file.exists) success else failure(s"$file does not exist")
         )

@@ -4,9 +4,9 @@ import java.io.File
 
 /** The configuration for the command-line interface
   *
-  * @param behavioursTOML
+  * @param behavioursJSON
   *   The file containing the behaviours
   */
 final case class CLIConfig(
-    behavioursTOML: File = null
+    behavioursJSON: File = null
 )
