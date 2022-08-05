@@ -3,6 +3,7 @@ package dev.r0bert.concept.json
 import play.api.libs.json.Json
 import play.api.libs.json.JsValue
 import java.util.UUID
+import dev.r0bert.beliefspread.core.BasicBehaviour
 
 class BehaviourSpecTest extends munit.FunSuite {
   test("Valid name and UUID") {
@@ -89,5 +90,14 @@ class BehaviourSpecTest extends munit.FunSuite {
     assertEquals(b.get(0).name, "B1")
     assertEquals(b.get(1).name, "B2")
     assertEquals(b.get(1).uuid, u)
+  }
+
+  test("toBasicBehaviour works") {
+    val u = UUID.randomUUID()
+    val bi: BehaviourSpec = BehaviourSpec("b1", u)
+    val bo: BasicBehaviour = bi.toBasicBehaviour
+
+    assertEquals(bo.name, "b1")
+    assertEquals(bo.uuid, u)
   }
 }
