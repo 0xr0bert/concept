@@ -10,6 +10,7 @@ lazy val root = project
       "org.scalameta" %% "munit" % "1.0.0-M6" % Test,
       "dev.r0bert" %% "beliefspread" % "0.15.0",
       "com.github.scopt" %% "scopt" % "4.1.0",
-      "com.typesafe.play" %% "play-json" % "2.10.0-RC6"
+      "com.typesafe.play" %% "play-json" % "2.10.0-RC6",
+      "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4"
     )
   )

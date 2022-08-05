@@ -3,6 +3,9 @@ package dev.r0bert.concept
 import scopt.OParser
 import java.io.File
 import scala.io.Source
+import play.api.libs.json.Json
+import dev.r0bert.concept.json.BehaviourSpec
+import scala.collection.parallel.CollectionConverters._
 
 @main def main(args: String*): Unit =
   val builder = OParser.builder[CLIConfig]
@@ -25,11 +28,21 @@ import scala.io.Source
       opt[File]('b', "behaviours")
         .required()
         .valueName("<file>")
-        .action((f, c) => c.copy(behavioursJSON = f))
-        .text("The behaviours config JSON file, see behaviours.json(5)")
         .validate(file =>
-          if (file.exists) success else failure(s"$file does not exist")
+          if (file.exists) success
+          else failure(s"$file does not exist")
         )
+        .action((f, c) =>
+          val json = Json.parse(Source.fromFile(f).getLines().mkString)
+          val bs =
+            json
+              .as[Array[BehaviourSpec]]
+              .par
+              .map(_.toBasicBehaviour)
+              .toArray
+          c.copy(behaviours = bs)
+        )
+        .text("The behaviours config JSON file, see behaviours.json(5)")
     )
 
   OParser.parse(parser, args, CLIConfig()) match {
