@@ -30,6 +30,12 @@ final case class BehaviourSpec(
     */
   def toBasicBehaviour: BasicBehaviour = BasicBehaviour(name, uuid)
 }
+
+/** This contains a [[Format]] for [[BehaviourSpec]]
+  * @author
+  *   Robert Greener
+  * @since v0.0.1
+  */
 object BehaviourSpec {
 
   /** This allows the data to be read from a JSON file, using default values if
