@@ -1,0 +1,42 @@
+= behaviours.json(5)
+Robert Greener
+v0.0.1
+:doctype: manpage
+:manmanual: Concepts Manual
+:mansource: behaviours
+:man-linkstyle: pass:[blue R < >]
+
+== Name
+
+behaviours.json - A json file used for describing the beliefs used in concept(1).
+
+== Description
+
+The behaviours.json(5) configuration file specifies the beliefs which are used in the concept(1) simulation.
+
+An example behaviours.json.example should have been provided with his application.
+
+This is a valid json file.
+
+The file is a takes the format of repeated entries of:
+
+----
+{
+  "name": "Behaviour 1",
+  "uuid": "d0f5efd5-a148-44d1-8490-4cc58e7cb4e1"
+}
+----
+
+inside a json array.
+
+== Fields
+
+Each entry in the top-level array contains `name` and (optionally) `UUID`.
+
+*name*::
+    Required.
+    The name of the behaviour.
+
+*UUID*::
+    Optional.
+    The UUID of the behaviour. If not specified it is randomly generated.
