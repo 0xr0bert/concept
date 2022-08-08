@@ -37,6 +37,6 @@ Each entry in the top-level array contains `name` and (optionally) `UUID`.
     Required.
     The name of the belief.
 
-*UUID*::
+*uuid*::
     Optional.
     The UUID of the belief. If not specified it is randomly generated.

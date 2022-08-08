@@ -37,6 +37,6 @@ Each entry in the top-level array contains `name` and (optionally) `UUID`.
     Required.
     The name of the behaviour.
 
-*UUID*::
+*uuid*::
     Optional.
     The UUID of the behaviour. If not specified it is randomly generated.
