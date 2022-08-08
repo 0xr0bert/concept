@@ -1,0 +1,19 @@
+[
+    {
+        "belief1Uuid": "907f0d52-c578-4256-a419-fcc51a1ad959",
+        "belief2Uuid": "907f0d52-c578-4256-a419-fcc51a1ad959",
+        "value": -0.4
+    }, {
+        "belief1Uuid": "ac5f1895-9e6d-4c9e-99ae-66472eee4482",
+        "belief2Uuid": "907f0d52-c578-4256-a419-fcc51a1ad959",
+        "value": 0.4
+    }, {
+        "belief1Uuid": "907f0d52-c578-4256-a419-fcc51a1ad959",
+        "belief2Uuid": "ac5f1895-9e6d-4c9e-99ae-66472eee4482",
+        "value": 0.4
+    }, {
+        "belief1Uuid": "ac5f1895-9e6d-4c9e-99ae-66472eee4482",
+        "belief2Uuid": "ac5f1895-9e6d-4c9e-99ae-66472eee4482",
+        "value": 0.01
+    }
+]
