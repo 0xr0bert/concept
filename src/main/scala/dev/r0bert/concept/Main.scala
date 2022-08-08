@@ -93,6 +93,7 @@ import dev.r0bert.concept.json.RelationshipSpec
             )
           c.copy(beliefs = uuidBeliefs.values.toArray)
         )
+        .text("The relationships config JSON file, see relationships.json(5)")
     )
 
   OParser.parse(parser, args, CLIConfig()) match {
