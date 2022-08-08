@@ -8,11 +8,11 @@ v0.0.1
 
 == Name
 
-behaviours.json - A json file used for describing the beliefs used in concept(1).
+behaviours.json - A json file used for describing the behaviours used in concept(1).
 
 == Description
 
-The behaviours.json(5) configuration file specifies the beliefs which are used in the concept(1) simulation.
+The behaviours.json(5) configuration file specifies the behaviours which are used in the concept(1) simulation.
 
 An example behaviours.json.example should have been provided with his application.
 
