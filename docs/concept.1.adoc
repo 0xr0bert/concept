@@ -28,6 +28,9 @@ concept - Run a simulation which explores how beliefs and behaviours spread.
 *-b, --behaviours*=_file_::
     The behaviours config JSON file, see behaviours.json(5).
 
+*-c, --beliefs*=_file_::
+    The beliefs config JSON file, see beliefs.json(5).
+
 == Resources
 
 *Source code hosting*: https://git.sr.ht/~ragreener1/concept

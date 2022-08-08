@@ -1,0 +1,42 @@
+= beliefs.json(5)
+Robert Greener
+v0.0.1
+:doctype: manpage
+:manmanual: Concepts Manual
+:mansource: beliefs
+:man-linkstyle: pass:[blue R < >]
+
+== Name
+
+beliefs.json - A json file used for describing the beliefs used in concept(1).
+
+== Description
+
+The beliefs.json(5) configuration file specifies the beliefs which are used in the concept(1) simulation.
+
+An example beliefs.json.example should have been provided with his application.
+
+This is a valid json file.
+
+The file is a takes the format of repeated entries of:
+
+----
+{
+  "name": "Belief 1",
+  "uuid": "907f0d52-c578-4256-a419-fcc51a1ad959"
+}
+----
+
+inside a json array.
+
+== Fields
+
+Each entry in the top-level array contains `name` and (optionally) `UUID`.
+
+*name*::
+    Required.
+    The name of the belief.
+
+*UUID*::
+    Optional.
+    The UUID of the belief. If not specified it is randomly generated.

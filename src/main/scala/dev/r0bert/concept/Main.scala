@@ -5,6 +5,7 @@ import java.io.File
 import scala.io.Source
 import play.api.libs.json.Json
 import dev.r0bert.concept.json.BehaviourSpec
+import dev.r0bert.concept.json.BeliefSpec
 import scala.collection.parallel.CollectionConverters._
 
 @main def main(args: String*): Unit =
@@ -42,7 +43,29 @@ import scala.collection.parallel.CollectionConverters._
               .toArray
           c.copy(behaviours = bs)
         )
-        .text("The behaviours config JSON file, see behaviours.json(5)")
+        .text("The behaviours config JSON file, see behaviours.json(5)"),
+      opt[File]('c', "beliefs")
+        .required()
+        .valueName("<file>")
+        .validate(file =>
+          if (file.exists) success
+          else failure(s"$file does not exist")
+        )
+        .action((f, c) =>
+          val bs = Json
+            .parse(
+              Source
+                .fromFile(f)
+                .getLines()
+                .mkString
+            )
+            .as[Array[BeliefSpec]]
+            .par
+            .map(_.toBasicBelief)
+            .toArray
+          c.copy(beliefs = bs)
+        )
+        .text("The beliefs config JSON file, see beliefs.json(5)")
     )
 
   OParser.parse(parser, args, CLIConfig()) match {
