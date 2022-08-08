@@ -14,7 +14,8 @@ interactions with the project.
     to do this. Please sign off any patches with
     `Signed-off-by: Full Name <email>` (use `-s` flag in git), to indicate you
     have read and agree to the
-    [Developer's Certificate of Origin 1.1](https://developercertificate.org/)
+    [Developer's Certificate of Origin 1.1](https://developercertificate.org/).
+    Feel free to GPG sign patches also!
 3. In due time, I will review the patch and follow-up with any requested
     changes. Thank you for your time in contributing!
 
