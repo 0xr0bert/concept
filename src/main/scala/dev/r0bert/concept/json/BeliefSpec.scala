@@ -23,7 +23,8 @@ import dev.r0bert.beliefspread.core.Behaviour
 final case class BeliefSpec(
     name: String,
     uuid: UUID = UUID.randomUUID(),
-    perceptions: Map[UUID, Double] = Map()
+    perceptions: Map[UUID, Double] = Map(),
+    relationships: Map[UUID, Double] = Map()
 ) {
 
   /** Convert this [[BeliefSpec]] into a [[BasicBelief]]
