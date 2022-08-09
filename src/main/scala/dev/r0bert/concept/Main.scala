@@ -7,8 +7,6 @@ import play.api.libs.json.Json
 import dev.r0bert.concept.json.BehaviourSpec
 import dev.r0bert.concept.json.BeliefSpec
 import scala.collection.parallel.CollectionConverters._
-import dev.r0bert.concept.json.RelationshipSpec.apply
-import dev.r0bert.concept.json.RelationshipSpec
 
 @main def main(args: String*): Unit =
   val builder = OParser.builder[CLIConfig]
@@ -69,33 +67,7 @@ import dev.r0bert.concept.json.RelationshipSpec
             .foreach(_.linkBeliefRelationships(bsBeliefs))
           c.copy(beliefs = bsBeliefs)
         )
-        .text("The beliefs config JSON file, see beliefs.json(5)"),
-      opt[File]('r', "relationships")
-        .required()
-        .valueName("<file>")
-        .validate(file =>
-          if (file.exists) success
-          else failure(s"$file does not exist")
-        )
-        .action((f, c) =>
-          val uuidBeliefs = c.beliefs
-            .map(b => (b.uuid, b))
-            .toMap
-          val rs = Json
-            .parse(
-              Source
-                .fromFile(f)
-                .getLines()
-                .mkString
-            )
-            .as[Array[RelationshipSpec]]
-            .foreach(r =>
-              uuidBeliefs(r.belief1Uuid)
-                .setRelationship(uuidBeliefs(r.belief2Uuid), Some(r.value))
-            )
-          c.copy(beliefs = uuidBeliefs.values.toArray)
-        )
-        .text("The relationships config JSON file, see relationships.json(5)")
+        .text("The beliefs config JSON file, see beliefs.json(5)")
     )
 
   OParser.parse(parser, args, CLIConfig()) match {
