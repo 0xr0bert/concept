@@ -17,6 +17,9 @@ import dev.r0bert.beliefspread.core.Belief
   * @param perceptions
   *   A mapping from behaviours (uuids) to perceptions. This defines how an
   *   agent performing the behaviour can be assumed to be driven by the belief.
+  * @param relationships
+  *   A mapping from beliefs (uuids) to relationships. This defines how
+  *   compatible holding the other belief is given that you hold this belief.
   * @author
   *   Robert Greener
   * @since v0.0.1
