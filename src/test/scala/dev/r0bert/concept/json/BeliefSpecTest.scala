@@ -699,4 +699,24 @@ class BeliefSpecTest extends munit.FunSuite {
     assertEqualsDouble(bo.getPerception(behaviours(0)).get, 0.2, 0.001)
     assertEqualsDouble(bo.getPerception(behaviours(1)).get, -0.5, 0.001)
   }
+
+  test("linkBeliefRelationships with beliefs and relationships") {
+    val beliefs = Array(
+      BasicBelief("b1"),
+      BasicBelief("b2")
+    )
+
+    val relationships = Map(
+      beliefs(0).uuid -> 0.2,
+      beliefs(1).uuid -> 0.5
+    )
+
+    val bi: BeliefSpec =
+      BeliefSpec("b1", beliefs(0).uuid, relationships = relationships)
+
+    bi.linkBeliefRelationships(beliefs)
+
+    assertEqualsDouble(beliefs(0).getRelationship(beliefs(0)).get, 0.2, 0.001)
+    assertEqualsDouble(beliefs(0).getRelationship(beliefs(1)).get, 0.5, 0.001)
+  }
 }

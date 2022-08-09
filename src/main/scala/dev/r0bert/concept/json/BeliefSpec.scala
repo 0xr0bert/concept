@@ -6,6 +6,7 @@ import play.api.libs.json.Format
 import dev.r0bert.beliefspread.core.BasicBelief
 import scala.collection.parallel.CollectionConverters._
 import dev.r0bert.beliefspread.core.Behaviour
+import dev.r0bert.beliefspread.core.Belief
 
 /** The specification for a [[Json]] file representing beliefs.
   *
@@ -49,6 +50,26 @@ final case class BeliefSpec(
         }
       )
     b
+
+  /** Link the relationships between [[Belief]]s
+    *
+    * @param beliefs
+    *   The known [[Belief]]s in the system.
+    * @author
+    *   Robert Greener
+    * @since v0.0.1
+    */
+  def linkBeliefRelationships(beliefs: Iterable[Belief]): Unit =
+    val uuidBeliefs = beliefs.par
+      .map(b => (b.uuid, b))
+      .toMap
+    relationships.par.map((r, v) =>
+      uuidBeliefs.get(r) match {
+        case Some(b) => uuidBeliefs(uuid).setRelationship(b, Some(v))
+        case None    =>
+      }
+    )
+
 }
 
 /** This contains a [[Format]] for [[BeliefSpec]]
