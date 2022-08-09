@@ -26,6 +26,10 @@ The file is a takes the format of repeated entries of:
   "uuid": "907f0d52-c578-4256-a419-fcc51a1ad959",
   "perceptions": {
     "d0f5efd5-a148-44d1-8490-4cc58e7cb4e1": 0.2
+  },
+  "relationships": {
+    "907f0d52-c578-4256-a419-fcc51a1ad959": 0.9,
+    "ac5f1895-9e6d-4c9e-99ae-66472eee4482": 0.1
   }
 }
 ----
@@ -50,5 +54,13 @@ Each entry in the top-level array contains `name` and (optionally) `uuid` and
     A map from behaviour uuids (see behaviours.json(5)) to perceptions.
 
     This is the amount that a person performing the behaviour can be assumed to be driven by the behaviour.
+
+    This must be between -1 and +1.
+
+*relationships*::
+    Optional.
+    A map from belief uuids to relationships.
+
+    This is the amount another belief (`b2`) can be deemed compatible with holding this belief (`b1`), given that you already hold `b1`.
 
     This must be between -1 and +1.

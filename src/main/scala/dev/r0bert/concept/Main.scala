@@ -62,10 +62,12 @@ import dev.r0bert.concept.json.RelationshipSpec
                 .mkString
             )
             .as[Array[BeliefSpec]]
-            .par
+          val bsBeliefs = bs.par
             .map(_.toBasicBelief())
             .toArray
-          c.copy(beliefs = bs)
+          bs.par
+            .foreach(_.linkBeliefRelationships(bsBeliefs))
+          c.copy(beliefs = bsBeliefs)
         )
         .text("The beliefs config JSON file, see beliefs.json(5)"),
       opt[File]('r', "relationships")
