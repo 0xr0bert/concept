@@ -64,7 +64,7 @@ import dev.r0bert.concept.json.PerceptionSpec
             )
             .as[Array[BeliefSpec]]
             .par
-            .map(_.toBasicBelief)
+            .map(_.toBasicBelief())
             .toArray
           c.copy(beliefs = bs)
         )

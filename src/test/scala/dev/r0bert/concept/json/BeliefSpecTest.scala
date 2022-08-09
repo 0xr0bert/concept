@@ -6,7 +6,7 @@ import java.util.UUID
 import dev.r0bert.beliefspread.core.BasicBelief
 
 class BeliefSpecTest extends munit.FunSuite {
-  test("Valid name and UUID") {
+  test("Valid name and UUID no perceptions") {
     val u = UUID.randomUUID()
     val uStr = u.toString()
     val json: JsValue = Json.parse(s"""
@@ -21,7 +21,7 @@ class BeliefSpecTest extends munit.FunSuite {
     assertEquals(b.get.uuid, u)
   }
 
-  test("Valid name and unspecified UUID") {
+  test("Valid name and unspecified UUID no perceptions") {
     val json: JsValue = Json.parse(s"""
     {
       "name": "Belief 1"
@@ -36,7 +36,7 @@ class BeliefSpecTest extends munit.FunSuite {
     )
   }
 
-  test("Invalid name and unspecified UUID") {
+  test("Invalid name and unspecified UUID no perceptions") {
     val json: JsValue = Json.parse(s"""
     {
       "name": 2
@@ -46,7 +46,7 @@ class BeliefSpecTest extends munit.FunSuite {
     assert(!b.isSuccess, "JSON read successful")
   }
 
-  test("Invalid name and valid UUID") {
+  test("Invalid name and valid UUID no perceptions") {
     val u = UUID.randomUUID()
     val uStr = u.toString()
     val json: JsValue = Json.parse(s"""
@@ -59,7 +59,7 @@ class BeliefSpecTest extends munit.FunSuite {
     assert(!b.isSuccess, "JSON read successful")
   }
 
-  test("Valid name and invalid UUID") {
+  test("Valid name and invalid UUID no perceptions") {
     val json: JsValue = Json.parse("""
     {
       "name": "B",
@@ -70,7 +70,7 @@ class BeliefSpecTest extends munit.FunSuite {
     assert(!b.isSuccess, "JSON read successful")
   }
 
-  test("Array of valid BeliefSpecs") {
+  test("Array of valid BeliefSpecs no perceptions") {
     val u = UUID.randomUUID()
     val uStr = u.toString()
     val json: JsValue = Json.parse(s"""
@@ -92,10 +92,10 @@ class BeliefSpecTest extends munit.FunSuite {
     assertEquals(b.get(1).uuid, u)
   }
 
-  test("toBasicBelief works") {
+  test("toBasicBelief works no perceptions") {
     val u = UUID.randomUUID()
     val bi: BeliefSpec = BeliefSpec("b1", u)
-    val bo: BasicBelief = bi.toBasicBelief
+    val bo: BasicBelief = bi.toBasicBelief()
 
     assertEquals(bo.name, "b1")
     assertEquals(bo.uuid, u)
