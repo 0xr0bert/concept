@@ -1,11 +1,22 @@
 [
     {
         "name": "Belief 1",
-        "uuid": "907f0d52-c578-4256-a419-fcc51a1ad959"
+        "uuid": "907f0d52-c578-4256-a419-fcc51a1ad959",
+        "perceptions": {
+            "d0f5efd5-a148-44d1-8490-4cc58e7cb4e1": 0.2,
+            "22a8a6e2-149d-494f-810e-57fbdd57585b": -0.5
+        }
     }, {
-        "name": "Belief 2"
+        "name": "Belief 2",
+        "perceptions": {
+            "d0f5efd5-a148-44d1-8490-4cc58e7cb4e1": 0.9,
+            "22a8a6e2-149d-494f-810e-57fbdd57585b": -0.1
+        }
     }, {
         "name": "Belief 3",
-        "uuid": "ac5f1895-9e6d-4c9e-99ae-66472eee4482"
+        "uuid": "ac5f1895-9e6d-4c9e-99ae-66472eee4482",
+        "perceptions": {
+            "22a8a6e2-149d-494f-810e-57fbdd57585b": 0.5
+        }
     }
 ]
