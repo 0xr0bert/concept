@@ -4,6 +4,7 @@ import play.api.libs.json.Json
 import play.api.libs.json.JsValue
 import java.util.UUID
 import dev.r0bert.beliefspread.core.BasicBelief
+import dev.r0bert.beliefspread.core.BasicBehaviour
 
 class BeliefSpecTest extends munit.FunSuite {
   test("Valid name and UUID no perceptions") {
@@ -21,6 +22,31 @@ class BeliefSpecTest extends munit.FunSuite {
     assertEquals(b.get.uuid, u)
   }
 
+  test("Valid name and UUID and perceptions") {
+    val u = UUID.randomUUID()
+    val uStr = u.toString()
+
+    val b1uuid = UUID.randomUUID()
+    val b2uuid = UUID.randomUUID()
+
+    val json: JsValue = Json.parse(s"""
+    {
+      "name": "Belief 1",
+      "uuid": "$uStr",
+      "perceptions": {
+        "$b1uuid": 0.2,
+        "$b2uuid": -0.4
+      }
+    }
+    """)
+    val b = json.validate[BeliefSpec]
+    assert(b.isSuccess, "JSON read unsuccessful")
+    assertEquals(b.get.name, "Belief 1")
+    assertEquals(b.get.uuid, u)
+    assertEqualsDouble(b.get.perceptions(b1uuid), 0.2, 0.001)
+    assertEqualsDouble(b.get.perceptions(b2uuid), -0.4, 0.001)
+  }
+
   test("Valid name and unspecified UUID no perceptions") {
     val json: JsValue = Json.parse(s"""
     {
@@ -36,10 +62,51 @@ class BeliefSpecTest extends munit.FunSuite {
     )
   }
 
+  test("Valid name and unspecified UUID perceptions") {
+    val b1uuid = UUID.randomUUID()
+    val b2uuid = UUID.randomUUID()
+
+    val json: JsValue = Json.parse(s"""
+    {
+      "name": "Belief 1",
+      "perceptions": {
+        "$b1uuid": 0.2,
+        "$b2uuid": -0.4
+      }
+    }
+    """)
+    val b = json.validate[BeliefSpec]
+    assert(b.isSuccess, "JSON read unsuccessful")
+    assertEquals(b.get.name, "Belief 1")
+    assertNotEquals(
+      b.get.uuid,
+      UUID.fromString("00000000-0000-0000-0000-000000000000")
+    )
+    assertEqualsDouble(b.get.perceptions(b1uuid), 0.2, 0.001)
+    assertEqualsDouble(b.get.perceptions(b2uuid), -0.4, 0.001)
+  }
+
   test("Invalid name and unspecified UUID no perceptions") {
     val json: JsValue = Json.parse(s"""
     {
       "name": 2
+    }
+    """)
+    val b = json.validate[BeliefSpec]
+    assert(!b.isSuccess, "JSON read successful")
+  }
+
+  test("Invalid name and unspecified UUID no perceptions") {
+    val b1uuid = UUID.randomUUID()
+    val b2uuid = UUID.randomUUID()
+
+    val json: JsValue = Json.parse(s"""
+    {
+      "name": 2,
+      "perceptions": {
+        "$b1uuid": 0.2,
+        "$b2uuid": -0.4
+      }
     }
     """)
     val b = json.validate[BeliefSpec]
@@ -59,11 +126,49 @@ class BeliefSpecTest extends munit.FunSuite {
     assert(!b.isSuccess, "JSON read successful")
   }
 
+  test("Invalid name and valid UUID perceptions") {
+    val u = UUID.randomUUID()
+    val uStr = u.toString()
+    val b1uuid = UUID.randomUUID()
+    val b2uuid = UUID.randomUUID()
+
+    val json: JsValue = Json.parse(s"""
+    {
+      "name": 2,
+      "uuid": "$uStr",
+      "perceptions": {
+        "$b1uuid": 0.2,
+        "$b2uuid": -0.4
+      }
+    }
+    """)
+    val b = json.validate[BeliefSpec]
+    assert(!b.isSuccess, "JSON read successful")
+  }
+
   test("Valid name and invalid UUID no perceptions") {
     val json: JsValue = Json.parse("""
     {
       "name": "B",
       "uuid": "aaa"
+    }
+    """)
+    val b = json.validate[BeliefSpec]
+    assert(!b.isSuccess, "JSON read successful")
+  }
+
+  test("Valid name and invalid UUID perceptions") {
+    val b1uuid = UUID.randomUUID()
+    val b2uuid = UUID.randomUUID()
+
+    val json: JsValue = Json.parse(s"""
+    {
+      "name": 2,
+      "uuid": "aaa",
+      "perceptions": {
+        "$b1uuid": 0.2,
+        "$b2uuid": -0.4
+      }
     }
     """)
     val b = json.validate[BeliefSpec]
@@ -92,6 +197,52 @@ class BeliefSpecTest extends munit.FunSuite {
     assertEquals(b.get(1).uuid, u)
   }
 
+  test("Array of valid BeliefSpecs perceptions") {
+    val u = UUID.randomUUID()
+    val uStr = u.toString()
+    val b1uuid = UUID.randomUUID()
+    val b2uuid = UUID.randomUUID()
+    val b3uuid = UUID.randomUUID()
+    val b4uuid = UUID.randomUUID()
+    val json: JsValue = Json.parse(s"""
+      [
+        {
+          "name": "B1",
+          "perceptions": {
+            "$b1uuid": 0.2,
+            "$b2uuid": -0.4
+          }
+        },
+        {
+          "name": "B2",
+          "uuid": "$uStr",
+          "perceptions": {
+            "$b1uuid": 0.1,
+            "$b2uuid": -0.2,
+            "$b3uuid": 0.9,
+            "$b4uuid": -0.33
+          }
+        }
+      ]
+    """)
+    val b = json.validate[Array[BeliefSpec]]
+    assert(b.isSuccess, "JSON read unsuccessful")
+    assertEquals(b.get.length, 2)
+    assertEquals(b.get(0).name, "B1")
+    assertEquals(b.get(1).name, "B2")
+    assertEquals(b.get(1).uuid, u)
+
+    assertEquals(b.get(0).perceptions.size, 2)
+    assertEquals(b.get(1).perceptions.size, 4)
+
+    assertEqualsDouble(b.get(0).perceptions(b1uuid), 0.2, 0.001)
+    assertEqualsDouble(b.get(0).perceptions(b2uuid), -0.4, 0.001)
+    assertEqualsDouble(b.get(1).perceptions(b1uuid), 0.1, 0.001)
+    assertEqualsDouble(b.get(1).perceptions(b2uuid), -0.2, 0.001)
+    assertEqualsDouble(b.get(1).perceptions(b3uuid), 0.9, 0.001)
+    assertEqualsDouble(b.get(1).perceptions(b4uuid), -0.33, 0.001)
+  }
+
   test("toBasicBelief works no perceptions") {
     val u = UUID.randomUUID()
     val bi: BeliefSpec = BeliefSpec("b1", u)
@@ -99,5 +250,30 @@ class BeliefSpecTest extends munit.FunSuite {
 
     assertEquals(bo.name, "b1")
     assertEquals(bo.uuid, u)
+  }
+
+  test("toBasicBelief works perceptions") {
+    val u = UUID.randomUUID()
+
+    val behaviours =
+      Array(
+        BasicBehaviour("b1"),
+        BasicBehaviour("b2")
+      )
+
+    val perceptions =
+      Map(
+        behaviours(0).uuid -> 0.2,
+        behaviours(1).uuid -> -0.5
+      )
+
+    val bi: BeliefSpec = BeliefSpec("b1", u, perceptions)
+    val bo: BasicBelief = bi.toBasicBelief(behaviours)
+
+    assertEquals(bo.name, "b1")
+    assertEquals(bo.uuid, u)
+
+    assertEqualsDouble(bo.getPerception(behaviours(0)).get, 0.2, 0.001)
+    assertEqualsDouble(bo.getPerception(behaviours(1)).get, -0.5, 0.001)
   }
 }
