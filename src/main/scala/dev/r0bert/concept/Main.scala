@@ -9,7 +9,6 @@ import dev.r0bert.concept.json.BeliefSpec
 import scala.collection.parallel.CollectionConverters._
 import dev.r0bert.concept.json.RelationshipSpec.apply
 import dev.r0bert.concept.json.RelationshipSpec
-import dev.r0bert.concept.json.PerceptionSpec
 
 @main def main(args: String*): Unit =
   val builder = OParser.builder[CLIConfig]
@@ -94,39 +93,7 @@ import dev.r0bert.concept.json.PerceptionSpec
             )
           c.copy(beliefs = uuidBeliefs.values.toArray)
         )
-        .text("The relationships config JSON file, see relationships.json(5)"),
-      opt[File]('p', "perceptions")
-        .required()
-        .valueName("<file>")
-        .validate(file =>
-          if (file.exists) success
-          else failure(s"$file does not exist")
-        )
-        .action((f, c) =>
-          val uuidBeliefs = c.beliefs
-            .map(b => (b.uuid, b))
-            .toMap
-          val uuidBehaviours = c.behaviours
-            .map(b => (b.uuid, b))
-            .toMap
-          Json
-            .parse(
-              Source
-                .fromFile(f)
-                .getLines()
-                .mkString
-            )
-            .as[Array[PerceptionSpec]]
-            .foreach(r =>
-              uuidBeliefs(r.beliefUuid)
-                .setPerception(uuidBehaviours(r.behaviourUuid), Some(r.value))
-            )
-          c.copy(
-            beliefs = uuidBeliefs.values.toArray,
-            behaviours = uuidBehaviours.values.toArray
-          )
-        )
-        .text("The perceptions config JSON file, see perceptions.json(5)")
+        .text("The relationships config JSON file, see relationships.json(5)")
     )
 
   OParser.parse(parser, args, CLIConfig()) match {

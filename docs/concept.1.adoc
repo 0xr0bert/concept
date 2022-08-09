@@ -34,9 +34,6 @@ concept - Run a simulation which explores how beliefs and behaviours spread.
 *-r, --relationships*=_file_::
     The relationships config JSON file, see relationships.json(5)
 
-*-p, --perceptions*=_file_::
-    The perceptions config JSON file, see perceptions.json(5)
-
 == Resources
 
 *Source code hosting*: https://git.sr.ht/~ragreener1/concept
