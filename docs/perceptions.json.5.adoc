@@ -1,0 +1,55 @@
+= perceptions.json(5)
+Robert Greener
+v0.0.1
+:doctype: manpage
+:manmanual: Concepts Manual
+:mansource: perceptions
+:man-linkstyle: pass:[blue R < >]
+
+== Name
+
+perceptions.json - A json file used for describing the perceptions between beliefs and behaviours used in concept(1).
+
+== Description
+
+The perceptions.json(5) configuration file specifies the perceptions between beliefs and behaviour which are used in the concept(1) simulation.
+
+An example perceptions.json.example should have been provided with his application.
+
+This is a valid json file.
+
+The file is a takes the format of repeated entries of:
+
+----
+{
+  "beliefUuid": "907f0d52-c578-4256-a419-fcc51a1ad959",
+  "behaviourUuid": "d0f5efd5-a148-44d1-8490-4cc58e7cb4e1",
+  "value": 0.4
+}
+----
+
+inside a json array.
+
+== Fields
+
+Each entry in the top-level array contains `beliefUuid`, `behaviourUuid`, and `value`
+
+*beliefUuid*::
+    Required.
+    The UUID of the belief.
+
+    This must be present in beliefs.json(5).
+
+*behaviourUuid*::
+    Required.
+    The UUID of the behaviour.
+
+    This must be present in behaviours.json(5).
+
+*value*::
+    Required.
+    The value of the perception.
+
+    This is the amount that a person performing the behaviour can be assumed to be driven by the behaviour.
+
+    This must be between -1 and +1.
