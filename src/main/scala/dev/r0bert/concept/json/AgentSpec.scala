@@ -40,7 +40,8 @@ final case class AgentSpec(
     val uuidBehaviours = behaviours.par
       .map(b => (b.uuid, b))
       .toMap
-    actions.foreach((time, b) => a.setAction(time, Some(uuidBehaviours(b))))
+    actions.par
+      .foreach((time, b) => a.setAction(time, Some(uuidBehaviours(b))))
     a
 }
 
