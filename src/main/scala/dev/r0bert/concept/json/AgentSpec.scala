@@ -6,6 +6,7 @@ import play.api.libs.json.Format
 import dev.r0bert.beliefspread.core.Agent
 import dev.r0bert.beliefspread.core.BasicAgent
 import dev.r0bert.beliefspread.core.Behaviour
+import dev.r0bert.beliefspread.core.Belief
 import scala.collection.parallel.CollectionConverters._
 
 /** The specification for a [[Json]] file representing [[Agent]]s.
@@ -14,19 +15,24 @@ import scala.collection.parallel.CollectionConverters._
   *   The UUID of the agent, default uses [[UUID.randomUUID]].
   * @param actions
   *   The [[Behaviour]]s the agent has performed, indexed by time.
+  * @param activations
+  *   The activation of the agent towards a [[Belief]] at a given time.
   * @author
   *   Robert Greener
   * @since v0.0.1
   */
 final case class AgentSpec(
     uuid: UUID = UUID.randomUUID(),
-    actions: Map[Int, UUID] = Map.empty
+    actions: Map[Int, UUID] = Map.empty,
+    activations: Map[Int, Map[UUID, Double]] = Map.empty
 ) {
 
   /** Convert this [[AgentSpec]] to a [[Agent]].
     *
     * @param behaviours
     *   The behaviours known to the system.
+    * @param beliefs
+    *   The beliefs known to the system.
     * @return
     *   The [[Agent]].
     * @author
@@ -34,7 +40,8 @@ final case class AgentSpec(
     * @since v0.0.1
     */
   def toBasicAgent(
-      behaviours: Iterable[Behaviour] = Array.empty[Behaviour]
+      behaviours: Iterable[Behaviour] = Array.empty[Behaviour],
+      beliefs: Iterable[Belief] = Array.empty[Belief]
   ): BasicAgent =
     val a = BasicAgent(uuid)
     val uuidBehaviours = behaviours.par
@@ -42,6 +49,17 @@ final case class AgentSpec(
       .toMap
     actions.par
       .foreach((time, b) => a.setAction(time, Some(uuidBehaviours(b))))
+
+    val uuidBeliefs = beliefs.par
+      .map(b => (b.uuid, b))
+      .toMap
+    activations.par
+      .foreach((time, acts) =>
+        acts.par.foreach((b, v) =>
+          a.setActivation(time, uuidBeliefs(b), Some(v))
+        )
+      )
+
     a
 }
 
