@@ -1,5 +1,5 @@
 # CONCEPT
-[![Build Status](https://jenkins.r0bert.dev/buildStatus/icon?job=concept&build=3&style=flat-square)](https://jenkins.r0bert.dev/job/concept/3/)
+[![Build Status](https://jenkins.r0bert.dev/buildStatus/icon?job=concept&style=flat-square)](https://jenkins.r0bert.dev/job/concept/)
 
 CONCEPT is an agent-based simulation platform for modelling how multiple belief spread influences behaviour.
 
