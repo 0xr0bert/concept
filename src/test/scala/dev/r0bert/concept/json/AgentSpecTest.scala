@@ -5,6 +5,7 @@ import play.api.libs.json.JsValue
 import play.api.libs.json.Json
 import dev.r0bert.beliefspread.core.BasicBehaviour
 import dev.r0bert.beliefspread.core.BasicBelief
+import dev.r0bert.beliefspread.core.BasicAgent
 
 class AgentSpecTest extends munit.FunSuite {
   test("Valid UUID") {
@@ -623,5 +624,20 @@ class AgentSpecTest extends munit.FunSuite {
     val ao = ai.toBasicAgent()
 
     assertEquals(ao.uuid, ai.uuid)
+  }
+
+  test("linkAgents") {
+    val a1 = BasicAgent()
+    val a2 = BasicAgent()
+    val a3 = BasicAgent()
+    val agents = Map(a1.uuid -> a1, a2.uuid -> a2, a3.uuid -> a3)
+    val friends = Map(a1.uuid -> 0.5, a2.uuid -> 0.4)
+    val ai = AgentSpec(a1.uuid, friends = friends)
+    ai.linkFriends(agents)
+
+    assertEquals(a1.getFriends().size, 2)
+    assertEquals(a1.getFriendWeight(a1), Some(0.5))
+    assertEquals(a1.getFriendWeight(a2), Some(0.4))
+    assertEquals(a1.getFriendWeight(a3), None)
   }
 }

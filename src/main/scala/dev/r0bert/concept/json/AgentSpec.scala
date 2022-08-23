@@ -68,6 +68,20 @@ final case class AgentSpec(
       .foreach((u, v) => a.setDelta(uuidBeliefs(u), Some(v)))
 
     a
+
+  /** Link this agent to the other [[Agent]]s.
+    *
+    * @param agents
+    *   The agents known to the system, mapped to their [[UUID]]s.
+    * @author
+    *   Robert Greener
+    * @since v0.0.1
+    */
+  def linkFriends(
+      agents: Map[UUID, Agent] = Map.empty
+  ): Unit =
+    val thisAgent = agents(uuid)
+    friends.map((a, v) => thisAgent.setFriendWeight(agents(a), Some(v)))
 }
 
 /** This contains a [[Format]] for [[AgentSpec]]
