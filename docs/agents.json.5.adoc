@@ -1,0 +1,83 @@
+= agents.json(5)
+Robert Greener
+v0.0.1
+:doctype: manpage
+:manmanual: Concepts Manual
+:mansource: agents
+:man-linkstyle: pass:[blue R < >]
+
+== Name
+
+agents.json - A json file used for describing the agents used in concept(1).
+
+== Description
+
+The agents.json(5) configuration file specifies the agents which are used in the concept(1) simulation.
+
+An example agents.json.example should have been provided with his application.
+
+This is a valid json file.
+
+The file is a takes the format of repeated entries of:
+
+----
+{
+  "uuid": "907f0d52-c578-4256-a419-fcc51a1ad959",
+  "actions": {
+    "1": "d0f5efd5-a148-44d1-8490-4cc58e7cb4e1"
+  },
+  "activations": {
+    "1": {
+      "907f0d52-c578-4256-a419-fcc51a1ad959": -0.2,
+      "ac5f1895-9e6d-4c9e-99ae-66472eee4482": 0.5
+    }
+  },
+  "deltas": {
+    "907f0d52-c578-4256-a419-fcc51a1ad959": 0.9,
+    "ac5f1895-9e6d-4c9e-99ae-66472eee4482": 0.1
+  },
+  "friends": {
+    "907f0d52-c578-4256-a419-fcc51a1ad959": 0.5
+  }
+}
+----
+
+inside a json array.
+
+== Fields
+
+Each entry in the top-level array contains optionally: `uuid`, `actions`,
+`activations`, `deltas`, and `friends`.
+
+*uuid*::
+    Optional.
+    The UUID of the agent. If not specified it is randomly generated.
+
+*actions*::
+    Optional.
+    A map from time (integer (as string)) to behaviour uuids (see 
+    behaviours.json(5)).
+    
+    An entry means that this action was performed at that time.
+
+**activations**:
+    Optional.
+    A map from time (integer (as string)) to a map of belief uuids (see
+    beliefs.json(5)) to activation (double).
+
+    This must be between -1 and +1.
+
+**deltas**:
+    Optional.
+    A map from belief uuids (see beliefs.json(5)) to delta (double).
+
+    This must be strictly positive.
+
+    This is the value that the activation for the belief changes by
+    (multiplicatively) at every time step.
+
+**friends**:
+    Optional.
+    A map from agent uuids to their weight.
+
+    This must be in range [0,1].
