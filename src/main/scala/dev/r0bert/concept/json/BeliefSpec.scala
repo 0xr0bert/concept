@@ -4,7 +4,6 @@ import java.util.UUID
 import play.api.libs.json.Json
 import play.api.libs.json.Format
 import dev.r0bert.beliefspread.core.BasicBelief
-import scala.collection.parallel.CollectionConverters._
 import dev.r0bert.beliefspread.core.Behaviour
 import dev.r0bert.beliefspread.core.Belief
 
@@ -45,7 +44,7 @@ final case class BeliefSpec(
       behaviours: Iterable[Behaviour] = Array[Behaviour]()
   ): BasicBelief =
     val b = BasicBelief(name, uuid)
-    behaviours.par
+    behaviours
       .foreach(beh =>
         perceptions.get(beh.uuid) match {
           case Some(v) => b.setPerception(beh, Some(v))
@@ -63,10 +62,10 @@ final case class BeliefSpec(
     * @since v0.0.1
     */
   def linkBeliefRelationships(beliefs: Iterable[Belief]): Unit =
-    val uuidBeliefs = beliefs.par
+    val uuidBeliefs = beliefs
       .map(b => (b.uuid, b))
       .toMap
-    relationships.par.map((r, v) =>
+    relationships.map((r, v) =>
       uuidBeliefs.get(r) match {
         case Some(b) => uuidBeliefs(uuid).setRelationship(b, Some(v))
         case None    =>
