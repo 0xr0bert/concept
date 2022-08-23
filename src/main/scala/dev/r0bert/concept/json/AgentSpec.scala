@@ -7,12 +7,16 @@ import dev.r0bert.beliefspread.core.Agent
 import dev.r0bert.beliefspread.core.BasicAgent
 import dev.r0bert.beliefspread.core.Behaviour
 import dev.r0bert.beliefspread.core.Belief
+import scala.collection.parallel.CollectionConverters._
 
 /** The specification for a [[Json]] file representing [[Agent]]s.
   *
-  * am uuid The UUID of the agent, default uses [[UUID.randomUUID]]. am actions
-  * The [[Behaviour]]s the agent has performed, indexed by time. am activations
-  * The activation of the agent towards a [[Belief]] at a given time.
+  * @param uuid
+  *   The UUID of the agent, default uses [[UUID.randomUUID]].
+  * @param actions
+  *   The [[Behaviour]]s the agent has performed, indexed by time.
+  * @param activations
+  *   The activation of the agent towards a [[Belief]] at a given time.
   * @author
   *   Robert Greener
   * @since v0.0.1
@@ -26,8 +30,10 @@ final case class AgentSpec(
 
   /** Convert this [[AgentSpec]] to a [[Agent]].
     *
-    * am behaviours The behaviours known to the system. am beliefs The beliefs
-    * known to the system.
+    * @param behaviours
+    *   The behaviours known to the system.
+    * @param beliefs
+    *   The beliefs known to the system.
     * @return
     *   The [[Agent]].
     * @author
@@ -39,21 +45,23 @@ final case class AgentSpec(
       beliefs: Iterable[Belief] = Array.empty[Belief]
   ): BasicAgent =
     val a = BasicAgent(uuid)
-    val uuidBehaviours = behaviours
+    val uuidBehaviours = behaviours.par
       .map(b => (b.uuid, b))
       .toMap
-    actions
+    actions.par
       .foreach((time, b) => a.setAction(time, Some(uuidBehaviours(b))))
 
-    val uuidBeliefs = beliefs
+    val uuidBeliefs = beliefs.par
       .map(b => (b.uuid, b))
       .toMap
-    activations
+    activations.par
       .foreach((time, acts) =>
-        acts.foreach((b, v) => a.setActivation(time, uuidBeliefs(b), Some(v)))
+        acts.par.foreach((b, v) =>
+          a.setActivation(time, uuidBeliefs(b), Some(v))
+        )
       )
 
-    deltas
+    deltas.par
       .foreach((u, v) => a.setDelta(uuidBeliefs(u), Some(v)))
 
     a
