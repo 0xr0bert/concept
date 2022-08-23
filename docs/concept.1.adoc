@@ -31,6 +31,9 @@ concept - Run a simulation which explores how beliefs and behaviours spread.
 *-c, --beliefs*=_file_::
     The beliefs config JSON file, see beliefs.json(5).
 
+*-a, --agents*=_file_::
+    The agents config JSON file, see agents.json(5).
+
 == Resources
 
 *Source code hosting*: https://git.sr.ht/~ragreener1/concept
