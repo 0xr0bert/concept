@@ -543,4 +543,85 @@ class AgentSpecTest extends munit.FunSuite {
     assertEquals(ao.getDelta(b1).get, 0.9)
     assertEquals(ao.getDelta(b2).get, 0.4)
   }
+
+  test("Valid UUID, friends") {
+    val uuid = UUID.randomUUID()
+    val u2 = UUID.randomUUID()
+    val u3 = UUID.randomUUID()
+
+    val json: JsValue = Json.parse(s"""
+    {
+      "uuid": "${uuid.toString()}",
+      "friends": {
+        "$u2": 0.4,
+        "$u3": 0.9
+      }
+    }
+    """)
+    val a = json.validate[AgentSpec]
+    assert(a.isSuccess, "JSON should be valid")
+    assertEquals(a.get.uuid, uuid)
+    assertEquals(a.get.friends.size, 2)
+    assertEquals(a.get.friends(u2), 0.4)
+    assertEquals(a.get.friends(u3), 0.9)
+  }
+
+  test("Unspecified UUID, friends") {
+    val u2 = UUID.randomUUID()
+    val u3 = UUID.randomUUID()
+    val json: JsValue = Json.parse(s"""
+    {
+      "friends": {
+        "$u2": 0.4,
+        "$u3": 0.9
+      }
+    }
+    """)
+    val a = json.validate[AgentSpec]
+    assert(a.isSuccess, "JSON should be valid")
+    assertNotEquals(
+      a.get.uuid,
+      UUID.fromString("00000000-0000-0000-0000-000000000000")
+    )
+    assertEquals(a.get.friends.size, 2)
+    assertEquals(a.get.friends(u2), 0.4)
+    assertEquals(a.get.friends(u3), 0.9)
+  }
+
+  test("Invalid UUID, friends") {
+    val u2 = UUID.randomUUID()
+    val u3 = UUID.randomUUID()
+    val json: JsValue = Json.parse(s"""
+    {
+      "uuid": "invalid",
+      "friends": {
+        "$u2": 0.4,
+        "$u3": 0.9
+      }
+    }
+    """)
+    val a = json.validate[AgentSpec]
+    assert(!a.isSuccess, "JSON should be invalid")
+  }
+
+  test("toBasicAgent with valid UUID, friends") {
+    val u = UUID.randomUUID()
+    val u2 = UUID.randomUUID()
+    val u3 = UUID.randomUUID()
+    val friends = Map(u2 -> 0.4, u3 -> 0.9)
+    val ai = AgentSpec(u, friends = friends)
+    val ao = ai.toBasicAgent()
+
+    assertEquals(ao.uuid, u)
+  }
+
+  test("toBasicAgent with unspecified UUID, friends") {
+    val u2 = UUID.randomUUID()
+    val u3 = UUID.randomUUID()
+    val friends = Map(u2 -> 0.4, u3 -> 0.9)
+    val ai = AgentSpec(friends = friends)
+    val ao = ai.toBasicAgent()
+
+    assertEquals(ao.uuid, ai.uuid)
+  }
 }
