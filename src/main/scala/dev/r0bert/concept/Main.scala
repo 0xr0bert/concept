@@ -4,6 +4,7 @@ import scopt.OParser
 import java.io.File
 import scala.io.Source
 import play.api.libs.json.Json
+import dev.r0bert.concept.json.AgentSpec
 import dev.r0bert.concept.json.BehaviourSpec
 import dev.r0bert.concept.json.BeliefSpec
 import scala.collection.parallel.CollectionConverters._
@@ -67,7 +68,32 @@ import scala.collection.parallel.CollectionConverters._
             .foreach(_.linkBeliefRelationships(bsBeliefs))
           c.copy(beliefs = bsBeliefs)
         )
-        .text("The beliefs config JSON file, see beliefs.json(5)")
+        .text("The beliefs config JSON file, see beliefs.json(5)"),
+      opt[File]('a', "agents")
+        .required()
+        .valueName("<file>")
+        .validate(file =>
+          if (file.exists) success
+          else failure(s"$file does not exist")
+        )
+        .action((f, c) =>
+          val as = Json
+            .parse(
+              Source
+                .fromFile(f)
+                .getLines()
+                .mkString
+            )
+            .as[Array[AgentSpec]]
+          val asAgents = as
+            .map(_.toBasicAgent(c.behaviours, c.beliefs))
+            .map(a => (a.uuid, a))
+            .toMap
+          as.par
+            .foreach(_.linkFriends(asAgents))
+          c.copy(agents = asAgents.values.toArray)
+        )
+        .text("The agents config JSON file, see agents.json(5)")
     )
 
   OParser.parse(parser, args, CLIConfig()) match {
