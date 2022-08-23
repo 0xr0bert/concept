@@ -18,6 +18,9 @@ import dev.r0bert.beliefspread.core.Belief
   *   The activation of the agent towards a [[Belief]] at a given time.
   * @param deltas
   *   The delta of the agent towards a [[Belief]].
+  * @param friends
+  *   The friends of the agent, with the weight of the friendship. This
+  *   currently has no effect.
   * @author
   *   Robert Greener
   * @since v0.0.1
@@ -26,7 +29,8 @@ final case class AgentSpec(
     uuid: UUID = UUID.randomUUID(),
     actions: Map[Int, UUID] = Map.empty,
     activations: Map[Int, Map[UUID, Double]] = Map.empty,
-    deltas: Map[UUID, Double] = Map.empty
+    deltas: Map[UUID, Double] = Map.empty,
+    friends: Map[UUID, Double] = Map.empty
 ) {
 
   /** Convert this [[AgentSpec]] to a [[Agent]].
