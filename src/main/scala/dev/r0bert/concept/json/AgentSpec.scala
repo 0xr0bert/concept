@@ -7,7 +7,6 @@ import dev.r0bert.beliefspread.core.Agent
 import dev.r0bert.beliefspread.core.BasicAgent
 import dev.r0bert.beliefspread.core.Behaviour
 import dev.r0bert.beliefspread.core.Belief
-import scala.collection.parallel.CollectionConverters._
 
 /** The specification for a [[Json]] file representing [[Agent]]s.
   *
@@ -45,23 +44,21 @@ final case class AgentSpec(
       beliefs: Iterable[Belief] = Array.empty[Belief]
   ): BasicAgent =
     val a = BasicAgent(uuid)
-    val uuidBehaviours = behaviours.par
+    val uuidBehaviours = behaviours
       .map(b => (b.uuid, b))
       .toMap
-    actions.par
+    actions
       .foreach((time, b) => a.setAction(time, Some(uuidBehaviours(b))))
 
-    val uuidBeliefs = beliefs.par
+    val uuidBeliefs = beliefs
       .map(b => (b.uuid, b))
       .toMap
-    activations.par
+    activations
       .foreach((time, acts) =>
-        acts.par.foreach((b, v) =>
-          a.setActivation(time, uuidBeliefs(b), Some(v))
-        )
+        acts.foreach((b, v) => a.setActivation(time, uuidBeliefs(b), Some(v)))
       )
 
-    deltas.par
+    deltas
       .foreach((u, v) => a.setDelta(uuidBeliefs(u), Some(v)))
 
     a
