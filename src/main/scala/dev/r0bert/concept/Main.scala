@@ -99,5 +99,5 @@ import scala.collection.parallel.CollectionConverters._
   OParser.parse(parser, args, CLIConfig()) match {
     case Some(config) =>
       println("Valid")
-    case None =>
+    case None => throw RuntimeException("The supplied data is incorrect")
   }
