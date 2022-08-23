@@ -336,4 +336,211 @@ class AgentSpecTest extends munit.FunSuite {
 
     assertEqualsDouble(ao.getActivation(4, bb).get, 0.3, 0.001)
   }
+
+  test("Valid UUID, deltas") {
+    val uuid = UUID.randomUUID()
+
+    val b1uuid = UUID.randomUUID()
+    val b2uuid = UUID.randomUUID()
+
+    val json: JsValue = Json.parse(s"""
+    {
+      "uuid": "${uuid.toString()}",
+      "deltas": {
+        "${b1uuid.toString()}": 0.9,
+        "${b2uuid.toString()}": 0.4
+      }
+    }
+    """)
+    val a = json.validate[AgentSpec]
+    assert(a.isSuccess, "JSON should be valid")
+    assertEquals(a.get.uuid, uuid)
+
+    assertEquals(a.get.deltas.size, 2)
+    assertEquals(a.get.deltas(b1uuid), 0.9)
+    assertEquals(a.get.deltas(b2uuid), 0.4)
+  }
+
+  test("Unspecified UUID, deltas") {
+    val b1uuid = UUID.randomUUID()
+    val b2uuid = UUID.randomUUID()
+
+    val json: JsValue = Json.parse(s"""
+    {
+      "deltas": {
+        "${b1uuid.toString()}": 0.9,
+        "${b2uuid.toString()}": 0.4
+      }
+    }
+    """)
+    val a = json.validate[AgentSpec]
+    assert(a.isSuccess, "JSON should be valid")
+    assertNotEquals(
+      a.get.uuid,
+      UUID.fromString("00000000-0000-0000-0000-000000000000")
+    )
+
+    assertEquals(a.get.deltas.size, 2)
+    assertEquals(a.get.deltas(b1uuid), 0.9)
+    assertEquals(a.get.deltas(b2uuid), 0.4)
+  }
+
+  test("Invalid UUID, deltas") {
+    val b1uuid = UUID.randomUUID()
+    val b2uuid = UUID.randomUUID()
+
+    val json: JsValue = Json.parse(s"""
+    {
+      "uuid": "invalid",
+      "deltas": {
+        "${b1uuid.toString()}": 0.9,
+        "${b2uuid.toString()}": 0.4
+      }
+    }
+    """)
+    val a = json.validate[AgentSpec]
+    assert(!a.isSuccess, "JSON should be invalid")
+  }
+
+  test("toBasicAgent with valid UUID, deltas") {
+    val u = UUID.randomUUID()
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+    val deltas = Map(b1.uuid -> 0.9, b2.uuid -> 0.4)
+    val ai = AgentSpec(u, deltas = deltas)
+    val ao = ai.toBasicAgent(beliefs = Array(b1, b2))
+
+    assertEquals(ao.uuid, u)
+    assertEquals(ao.getDelta(b1).get, 0.9)
+    assertEquals(ao.getDelta(b2).get, 0.4)
+  }
+
+  test("toBasicAgent with unspecified UUID, deltas") {
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+    val deltas = Map(b1.uuid -> 0.9, b2.uuid -> 0.4)
+    val ai = AgentSpec(deltas = deltas)
+    val ao = ai.toBasicAgent(beliefs = Array(b1, b2))
+
+    assertEquals(ao.uuid, ai.uuid)
+    assertEquals(ao.getDelta(b1).get, 0.9)
+    assertEquals(ao.getDelta(b2).get, 0.4)
+  }
+
+  test("Valid UUID, actions, deltas") {
+    val uuid = UUID.randomUUID()
+    val b1uuid = UUID.randomUUID()
+    val b2uuid = UUID.randomUUID()
+
+    val json: JsValue = Json.parse(s"""
+    {
+      "uuid": "${uuid.toString()}",
+      "actions": {
+        "1": "$b1uuid",
+        "2": "$b2uuid"
+      },
+      "deltas": {
+        "${b1uuid.toString()}": 0.9,
+        "${b2uuid.toString()}": 0.4
+      }
+    }
+    """)
+    val a = json.validate[AgentSpec]
+    assert(a.isSuccess, "JSON should be valid")
+    assertEquals(a.get.uuid, uuid)
+    assertEquals(a.get.actions.size, 2)
+    assertEquals(a.get.actions(1), b1uuid)
+    assertEquals(a.get.actions(2), b2uuid)
+
+    assertEquals(a.get.deltas.size, 2)
+    assertEquals(a.get.deltas(b1uuid), 0.9)
+    assertEquals(a.get.deltas(b2uuid), 0.4)
+  }
+
+  test("Unspecified UUID, actions, deltas") {
+    val b1uuid = UUID.randomUUID()
+    val b2uuid = UUID.randomUUID()
+    val json: JsValue = Json.parse(s"""
+    {
+      "actions": {
+        "1": "$b1uuid",
+        "2": "$b2uuid"
+      },
+      "deltas": {
+        "${b1uuid.toString()}": 0.9,
+        "${b2uuid.toString()}": 0.4
+      }
+    }
+    """)
+    val a = json.validate[AgentSpec]
+    assert(a.isSuccess, "JSON should be valid")
+    assertNotEquals(
+      a.get.uuid,
+      UUID.fromString("00000000-0000-0000-0000-000000000000")
+    )
+    assertEquals(a.get.actions.size, 2)
+    assertEquals(a.get.actions(1), b1uuid)
+    assertEquals(a.get.actions(2), b2uuid)
+
+    assertEquals(a.get.deltas.size, 2)
+    assertEquals(a.get.deltas(b1uuid), 0.9)
+    assertEquals(a.get.deltas(b2uuid), 0.4)
+  }
+
+  test("Invalid UUID, actions, deltas") {
+    val b1uuid = UUID.randomUUID()
+    val b2uuid = UUID.randomUUID()
+
+    val json: JsValue = Json.parse(s"""
+    {
+      "uuid": "invalid",
+      "actions": {
+        "1": "$b1uuid",
+        "2": "$b2uuid"
+      },
+      "deltas": {
+        "${b1uuid.toString()}": 0.9,
+        "${b2uuid.toString()}": 0.4
+      }
+    }
+    """)
+    val a = json.validate[AgentSpec]
+    assert(!a.isSuccess, "JSON should be invalid")
+  }
+
+  test("toBasicAgent with valid UUID, actions, deltas") {
+    val u = UUID.randomUUID()
+    val behaviours = Array(BasicBehaviour("b1"), BasicBehaviour("b2"))
+    val actions = Map(1 -> behaviours(0).uuid, 2 -> behaviours(1).uuid)
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+    val deltas = Map(b1.uuid -> 0.9, b2.uuid -> 0.4)
+    val ai = AgentSpec(u, deltas = deltas, actions = actions)
+
+    val ao = ai.toBasicAgent(behaviours = behaviours, beliefs = Array(b1, b2))
+
+    assertEquals(ao.uuid, u)
+    assertEquals(ao.getAction(1).get, behaviours(0))
+    assertEquals(ao.getAction(2).get, behaviours(1))
+    assertEquals(ao.getDelta(b1).get, 0.9)
+    assertEquals(ao.getDelta(b2).get, 0.4)
+  }
+
+  test("toBasicAgent with unspecified UUID, actions, deltas") {
+    val behaviours = Array(BasicBehaviour("b1"), BasicBehaviour("b2"))
+    val actions = Map(1 -> behaviours(0).uuid, 2 -> behaviours(1).uuid)
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+    val deltas = Map(b1.uuid -> 0.9, b2.uuid -> 0.4)
+    val ai = AgentSpec(deltas = deltas, actions = actions)
+
+    val ao = ai.toBasicAgent(behaviours, beliefs = Array(b1, b2))
+
+    assertEquals(ao.getAction(1).get, behaviours(0))
+    assertEquals(ao.getAction(2).get, behaviours(1))
+
+    assertEquals(ao.uuid, ai.uuid)
+    assertEquals(ao.getDelta(b1).get, 0.9)
+    assertEquals(ao.getDelta(b2).get, 0.4)
+  }
 }

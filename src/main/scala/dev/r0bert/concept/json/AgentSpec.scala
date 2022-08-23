@@ -24,7 +24,8 @@ import scala.collection.parallel.CollectionConverters._
 final case class AgentSpec(
     uuid: UUID = UUID.randomUUID(),
     actions: Map[Int, UUID] = Map.empty,
-    activations: Map[Int, Map[UUID, Double]] = Map.empty
+    activations: Map[Int, Map[UUID, Double]] = Map.empty,
+    deltas: Map[UUID, Double] = Map.empty
 ) {
 
   /** Convert this [[AgentSpec]] to a [[Agent]].
@@ -59,6 +60,9 @@ final case class AgentSpec(
           a.setActivation(time, uuidBeliefs(b), Some(v))
         )
       )
+
+    deltas.par
+      .foreach((u, v) => a.setDelta(uuidBeliefs(u), Some(v)))
 
     a
 }
