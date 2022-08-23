@@ -106,7 +106,7 @@ class AgentSpecTest extends munit.FunSuite {
     val b1uuid = UUID.randomUUID()
     val b2uuid = UUID.randomUUID()
 
-    val json: JsValue = Json.parse("""
+    val json: JsValue = Json.parse(s"""
     {
       "uuid": "invalid",
       "actions": {
@@ -187,7 +187,7 @@ class AgentSpecTest extends munit.FunSuite {
 
   test("Invalid UUID, activations") {
     val u2 = UUID.randomUUID()
-    val json: JsValue = Json.parse("""
+    val json: JsValue = Json.parse(s"""
     {
       "uuid": "invalid",
       "activations": {
@@ -287,7 +287,7 @@ class AgentSpecTest extends munit.FunSuite {
     val b2uuid = UUID.randomUUID()
     val u2 = UUID.randomUUID()
 
-    val json: JsValue = Json.parse("""
+    val json: JsValue = Json.parse(s"""
     {
       "uuid": "invalid",
       "actions": {
