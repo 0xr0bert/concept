@@ -16,6 +16,8 @@ import dev.r0bert.beliefspread.core.Belief
   *   The [[Behaviour]]s the agent has performed, indexed by time.
   * @param activations
   *   The activation of the agent towards a [[Belief]] at a given time.
+  * @param deltas
+  *   The delta of the agent towards a [[Belief]].
   * @author
   *   Robert Greener
   * @since v0.0.1
