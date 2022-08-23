@@ -62,7 +62,7 @@ import scala.collection.parallel.CollectionConverters._
             )
             .as[Array[BeliefSpec]]
           val bsBeliefs = bs.par
-            .map(_.toBasicBelief())
+            .map(_.toBasicBelief(c.behaviours))
             .toArray
           bs.par
             .foreach(_.linkBeliefRelationships(bsBeliefs))
