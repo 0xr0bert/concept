@@ -19,8 +19,7 @@ import dev.r0bert.beliefspread.core.Belief
   * @param deltas
   *   The delta of the agent towards a [[Belief]].
   * @param friends
-  *   The friends of the agent, with the weight of the friendship. This
-  *   currently has no effect.
+  *   The friends of the agent, with the weight of the friendship.
   * @author
   *   Robert Greener
   * @since v0.0.1
