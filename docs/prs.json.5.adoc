@@ -1,0 +1,49 @@
+= prs.json(5)
+Robert Greener
+v0.0.1
+:doctype: manpage
+:manmanual: Concepts Manual
+:mansource: prs
+:man-linkstyle: pass:[blue R < >]
+
+== Name
+
+prs.json - A json file used for describing the performance relationships used in concept(1).
+
+== Description
+
+The prs.json(5) configuration file specifies the performance relationships which are used in the concept(1) simulation.
+
+An example prs.json.example should have been provided with his application.
+
+This is a valid json file.
+
+The file is a takes the format of repeated entries of:
+
+----
+{
+  "beliefUuid": "907f0d52-c578-4256-a419-fcc51a1ad959",
+  "behaviourUuid": "d0f5efd5-a148-44d1-8490-4cc58e7cb4e1",
+  "value": 0.2
+}
+----
+
+inside a json array.
+
+== Fields
+
+Each entry in the top-level array contains `beliefUuid`, `behaviourUuid`, and `value`.
+
+*beliefUuid*::
+    Required.
+    The uuid of the belief (see beliefs.json(5)).
+
+*behaviourUuid*::
+    Required.
+    The UUID of the behaviour (see behaviours.json(5)).
+
+*value*::
+    Required.
+    The value of the relationship.
+
+    This is a real value that describes how likely (or unlikely if negative) it is for an agent to perform the behaviour, given that they hold the belief.
