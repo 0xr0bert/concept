@@ -15,4 +15,4 @@ See the LICENSE file for the definitive terms of the license.
 
 You may reference this software as:
 
-Robert Greener, 2022. CONCEPT. <https://git.sr.ht/~ragreener1/concept/>.
+Robert Greener, 2022. CONCEPT. <https://hg.sr.ht/~ragreener1/concept/>.
