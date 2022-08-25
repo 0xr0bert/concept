@@ -7,7 +7,6 @@ import play.api.libs.json.Json
 import dev.r0bert.concept.json.AgentSpec
 import dev.r0bert.concept.json.BehaviourSpec
 import dev.r0bert.concept.json.BeliefSpec
-import scala.collection.parallel.CollectionConverters._
 import dev.r0bert.concept.json.PerformanceRelationshipSpec
 import dev.r0bert.concept.performancerelationships.PerformanceRelationshipUtils.PerformanceRelationshipSpecTools
 
@@ -41,7 +40,6 @@ import dev.r0bert.concept.performancerelationships.PerformanceRelationshipUtils.
           val bs =
             json
               .as[Array[BehaviourSpec]]
-              .par
               .map(_.toBasicBehaviour)
               .toArray
           c.copy(behaviours = bs)
@@ -63,10 +61,10 @@ import dev.r0bert.concept.performancerelationships.PerformanceRelationshipUtils.
                 .mkString
             )
             .as[Array[BeliefSpec]]
-          val bsBeliefs = bs.par
+          val bsBeliefs = bs
             .map(_.toBasicBelief(c.behaviours))
             .toArray
-          bs.par
+          bs
             .foreach(_.linkBeliefRelationships(bsBeliefs))
           c.copy(beliefs = bsBeliefs)
         )
@@ -91,7 +89,7 @@ import dev.r0bert.concept.performancerelationships.PerformanceRelationshipUtils.
             .map(_.toBasicAgent(c.behaviours, c.beliefs))
             .map(a => (a.uuid, a))
             .toMap
-          as.par
+          as
             .foreach(_.linkFriends(asAgents))
           c.copy(agents = asAgents.values.toArray)
         )
