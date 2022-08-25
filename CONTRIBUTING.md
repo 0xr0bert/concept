@@ -3,6 +3,9 @@ When contributing to this repository, please first discuss any changes you
 wish to make via email to the
 [mailing list](mailto:~ragreener1/concept@lists.sr.ht).
 
+[This guide](https://man.sr.ht/hg.sr.ht/email.md) may be useful in helping you
+to email a patch!
+
 Please note we have a code of conduct, please follow it in all your
 interactions with the project.
 
@@ -12,8 +15,7 @@ interactions with the project.
     [mailing list](mailto:~ragreener1/concept@lists.sr.ht).
     [This guide](https://git-send-email.io/) may be useful in helping you
     to do this. Please sign off any patches with
-    `Signed-off-by: Full Name <email>` (use `-s` flag in git), to indicate you
-    have read and agree to the
+    `s=Full Name <email>` ), to indicate you have read and agree to the
     [Developer's Certificate of Origin 1.1](https://developercertificate.org/).
     Feel free to GPG sign patches also!
 3. In due time, I will review the patch and follow-up with any requested
