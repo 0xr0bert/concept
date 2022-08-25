@@ -8,6 +8,8 @@ import dev.r0bert.concept.json.AgentSpec
 import dev.r0bert.concept.json.BehaviourSpec
 import dev.r0bert.concept.json.BeliefSpec
 import scala.collection.parallel.CollectionConverters._
+import dev.r0bert.concept.json.PerformanceRelationshipSpec
+import dev.r0bert.concept.performancerelationships.PerformanceRelationshipUtils.PerformanceRelationshipSpecTools
 
 @main def main(args: String*): Unit =
   val builder = OParser.builder[CLIConfig]
@@ -93,7 +95,30 @@ import scala.collection.parallel.CollectionConverters._
             .foreach(_.linkFriends(asAgents))
           c.copy(agents = asAgents.values.toArray)
         )
-        .text("The agents config JSON file, see agents.json(5)")
+        .text("The agents config JSON file, see agents.json(5)"),
+      opt[File]('p', "performance-relationships")
+        .required()
+        .valueName("<file>")
+        .validate(file =>
+          if (file.exists) success
+          else failure(s"$file does not exist")
+        )
+        .action((f, c) =>
+          val prs = Json
+            .parse(
+              Source
+                .fromFile(f)
+                .getLines()
+                .mkString
+            )
+            .as[Array[PerformanceRelationshipSpec]]
+            .toPerformanceRelationships(
+              c.beliefs.map(b => (b.uuid, b)).toMap,
+              c.behaviours.map(b => (b.uuid, b)).toMap
+            )
+          c.copy(performanceRelationships = prs)
+        )
+        .text("The performance relationships config JSON file, see prs.json(5)")
     )
 
   OParser.parse(parser, args, CLIConfig()) match {
