@@ -3,9 +3,6 @@ When contributing to this repository, please first discuss any changes you
 wish to make via email to the
 [mailing list](mailto:~ragreener1/concept@lists.sr.ht).
 
-[This guide](https://man.sr.ht/hg.sr.ht/email.md) may be useful in helping you
-to email a patch!
-
 Please note we have a code of conduct, please follow it in all your
 interactions with the project.
 
@@ -13,7 +10,7 @@ interactions with the project.
 1. Please check your code runs and all the tests still pass (`sbt test`).
 2. Please prepare a patch (or a patch-set) and email it to the
     [mailing list](mailto:~ragreener1/concept@lists.sr.ht).
-    [This guide](https://git-send-email.io/) may be useful in helping you
+    [This guide](https://man.sr.ht/hg.sr.ht/email.md) may be useful in helping you
     to do this. Please sign off any patches with
     `s=Full Name <email>` ), to indicate you have read and agree to the
     [Developer's Certificate of Origin 1.1](https://developercertificate.org/).
