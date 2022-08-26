@@ -21,6 +21,26 @@ interactions with the project.
 3. In due time, I will review the patch and follow-up with any requested
     changes. Thank you for your time in contributing!
 
+You do not have to use mercurial to prepare patches. Feel free to download the
+tarball of the [tip](https://hg.sr.ht/~ragreener1/concept/archive/tip.tar.gz)
+and just prepare a patch.
+
+## Signing off patches
+
+You may find it easy to add this to your hgrc.
+
+```
+[committemplate]
+changeset = {desc}\n
+    s={author}
+    HG: Enter commit message.  Lines beginning with 'HG:' are removed.
+    HG: {extramsg}
+    HG: ------------------------ >8 ------------------------
+    HG: Do not touch the line above.
+    HG: Everything below will be removed.
+```
+
+This will automatically sign off commits.
 
 # Code of Conduct
 
