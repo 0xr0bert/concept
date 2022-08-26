@@ -12,7 +12,7 @@ interactions with the project.
     [mailing list](mailto:~ragreener1/concept@lists.sr.ht).
     [This guide](https://man.sr.ht/hg.sr.ht/email.md) may be useful in helping
     you to do this. Please sign off any patches with
-    `s=Full Name <email>` ), to indicate you have read and agree to the
+    `s=Full Name <email>`, to indicate you have read and agree to the
     [Developer's Certificate of Origin 1.1](https://developercertificate.org/).
     Feel free to GPG sign patches also!
 3. In due time, I will review the patch and follow-up with any requested
