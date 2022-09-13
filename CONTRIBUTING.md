@@ -1,43 +1,12 @@
 # Contributing
-When contributing to this repository, please first discuss any changes you
-wish to make via email to the
-[mailing list](mailto:~ragreener1/concept@lists.sr.ht).
+To contribute, just open an issue or a pull request.
+Please sign off any commits with the `-s` flag in git.
+This indicates that you've read and agree to the
+[Developer's Certificate of Origin 1.1](https://developercertificate.org/).
+Feel free to GPG sign patches also!
 
 Please note we have a code of conduct, please follow it in all your
 interactions with the project.
-
-## Contribution process
-1. Please check your code runs and all the tests still pass (`sbt test`).
-2. Please prepare a patch (or a patch-set) and email it to the
-    [mailing list](mailto:~ragreener1/concept@lists.sr.ht).
-    [This guide](https://man.sr.ht/hg.sr.ht/email.md) may be useful in helping
-    you to do this. Please sign off any patches with
-    `s=Full Name <email>`, to indicate you have read and agree to the
-    [Developer's Certificate of Origin 1.1](https://developercertificate.org/).
-    Feel free to GPG sign patches also!
-3. In due time, I will review the patch and follow-up with any requested
-    changes. Thank you for your time in contributing!
-
-You do not have to use mercurial to prepare patches. Feel free to download the
-tarball of the [tip](https://hg.sr.ht/~ragreener1/concept/archive/tip.tar.gz)
-and just prepare a patch.
-
-## Signing off patches
-
-You may find it easy to add this to your hgrc.
-
-```
-[committemplate]
-changeset = {desc}\n
-    s={author}
-    HG: Enter commit message.  Lines beginning with 'HG:' are removed.
-    HG: {extramsg}
-    HG: ------------------------ >8 ------------------------
-    HG: Do not touch the line above.
-    HG: Everything below will be removed.
-```
-
-This will automatically sign off commits.
 
 # Code of Conduct
 
