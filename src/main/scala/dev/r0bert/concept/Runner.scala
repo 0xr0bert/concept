@@ -16,6 +16,18 @@ class Runner(
     config: CLIConfig
 ) {
 
+  /** Tick starting from time 1.
+    *
+    * @param end
+    *   The end time (inclusive).
+    * @see
+    *   [[tickBetween]]
+    * @author
+    *   Robert Greener
+    * @since v0.0.1
+    */
+  def tickTo(end: Int): Unit = tickBetween(1, end)
+
   /** Tick between the start and end (inclusive).
     *
     * @param start
