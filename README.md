@@ -1,7 +1,6 @@
 # CONCEPT
 CONCEPT is an agent-based simulation platform for modelling how multiple belief spread influences behaviour.
 
-To contribute / discuss this project, please email patches / comments to [~ragreener1/concept@lists.sr.ht](mailto:~ragreener1/concept@lists.sr.ht).
 See CONTRIBUTING.md for a full description on how to contribute.
 
 # Copyright
@@ -13,4 +12,4 @@ See the LICENSE file for the definitive terms of the license.
 
 You may reference this software as:
 
-Robert Greener, 2022. CONCEPT. <https://hg.sr.ht/~ragreener1/concept/>.
+Robert Greener, 2022. CONCEPT. <https://github.com/0xr0bert/concept>.
