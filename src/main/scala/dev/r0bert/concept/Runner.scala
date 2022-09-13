@@ -26,6 +26,7 @@ class Runner(
     */
   def tick(time: Int): Unit =
     perceiveBeliefs(time)
+    performActions(time)
 
   /** Perceive the beliefs for every agent.
     *
