@@ -16,6 +16,19 @@ class Runner(
     config: CLIConfig
 ) {
 
+  /** Tick between the start and end (inclusive).
+    *
+    * @param start
+    *   The start time (inclusive).
+    * @param end
+    *   The end time (inclusive).
+    * @author
+    *   Robert Greener
+    * @since 0.0.1
+    */
+  def tickBetween(start: Int, end: Int): Unit =
+    (start to end).foreach(tick(_))
+
   /** Tick this time of the simulation (i.e., do everything expected).
     *
     * @param time
