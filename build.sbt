@@ -13,3 +13,4 @@ lazy val root = project
       "com.typesafe.play" %% "play-json" % "2.10.0-RC6"
     )
   )
+scalacOptions := Seq("-unchecked", "-deprecation")
