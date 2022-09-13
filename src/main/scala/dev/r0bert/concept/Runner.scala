@@ -79,4 +79,17 @@ class Runner(
     }
 
     agent.setAction(time, Some(chosenBehaviour))
+
+  /** Perform the actions of all agents
+    *
+    * @param time
+    *   The current simulation time.
+    * @see
+    *   [[agentPerformAction]]
+    * @author
+    *   Robert Greener
+    * @since v0.0.1
+    */
+  def performActions(time: Int): Unit =
+    config.agents.foreach(agentPerformAction(_, time))
 }
