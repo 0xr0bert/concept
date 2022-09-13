@@ -1,5 +1,5 @@
 {
-  description = "COLT Unemployment epigenetic analysis";
+  description = "concept";
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -10,12 +10,12 @@
       rec {
         devShell = pkgs.mkShell {
           buildInputs = [
-	    pkgs.coursier
-	    pkgs.jdk
-	    pkgs.sbt
+	          pkgs.coursier
+	          pkgs.jdk
+	          pkgs.sbt
           ];
           shellHook = ''
-            export PS1="\n\[\033[1;32m\][colt-unemployment-epi:\\w]\$\[\033[0m\] "
+            export PS1="\n\[\033[1;32m\][concept:\\w]\$\[\033[0m\] "
           '';
         };
       }
