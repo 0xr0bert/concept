@@ -1,9 +1,0 @@
-image: nixos/latest
-environment:
-  NIX_CONFIG: "experimental-features = nix-command flakes"
-sources:
-  - https://git.sr.ht/~ragreener1/concept
-tasks:
-  - test: |
-      cd concept
-      nix develop -c sbt clean test
