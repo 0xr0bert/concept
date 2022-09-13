@@ -39,9 +39,7 @@ concept - Run a simulation which explores how beliefs and behaviours spread.
 
 == Resources
 
-*Source code hosting*: https://git.sr.ht/~ragreener1/concept
-
-*Mailing list*: ~ragreener1/concept@lists.sr.ht
+*Source code hosting*: https://github.com/0xr0bert/concept
 
 == Copying
 
