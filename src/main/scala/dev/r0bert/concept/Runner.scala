@@ -22,7 +22,8 @@ class Runner(
     * @param start The start time.
     * @param end The end time.
     */
-  def run(start: Int, end: Int): Unit = {}
+  def run(start: Int, end: Int): Unit = 
+    tickBetween(start, end)
 
   /** Tick starting from time 1.
     *
