@@ -16,6 +16,14 @@ class Runner(
     config: CLIConfig
 ) {
 
+  /**
+    * Run the simulation between time start and end.
+    *
+    * @param start The start time.
+    * @param end The end time.
+    */
+  def run(start: Int, end: Int): Unit = {}
+
   /** Tick starting from time 1.
     *
     * @param end
