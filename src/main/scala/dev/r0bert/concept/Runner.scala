@@ -28,6 +28,7 @@ class Runner(
     */
   def run(start: Int, end: Int): Unit =
     logger.info("Starting concept")
+    logger.info(s"n beliefs: ${config.beliefs.size}")
     tickBetween(start, end)
 
   /** Tick starting from time 1.
