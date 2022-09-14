@@ -3,17 +3,21 @@ package dev.r0bert.concept
 import dev.r0bert.beliefspread.core.Agent
 
 import scala.util.Random
+import com.typesafe.scalalogging.Logger
 
 /** This runs the simulation.
   *
   * @param config
   *   The [[CLIConfig]] of the simulation
+  * @param logger
+  *   The logger.
   * @author
   *   Robert Greener
   * @since v0.0.1
   */
 class Runner(
-    config: CLIConfig
+    config: CLIConfig,
+    logger: Logger = Logger("concept")
 ) {
 
   /**
@@ -22,7 +26,8 @@ class Runner(
     * @param start The start time.
     * @param end The end time.
     */
-  def run(start: Int, end: Int): Unit = 
+  def run(start: Int, end: Int): Unit =
+    logger.info("Starting concept")
     tickBetween(start, end)
 
   /** Tick starting from time 1.
