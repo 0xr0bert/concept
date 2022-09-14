@@ -34,6 +34,7 @@ class Runner(
     logger.info(s"Start time: ${start}")
     logger.info(s"End time: ${end}")
     tickBetween(start, end)
+    logger.info(s"Ending concept")
 
   /** Tick starting from time 1.
     *
