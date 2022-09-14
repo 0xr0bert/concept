@@ -30,6 +30,7 @@ class Runner(
     logger.info("Starting concept")
     logger.info(s"n beliefs: ${config.beliefs.size}")
     logger.info(s"n behaviours: ${config.behaviours.size}")
+    logger.info(s"n agents: ${config.agents.size}")
     tickBetween(start, end)
 
   /** Tick starting from time 1.
