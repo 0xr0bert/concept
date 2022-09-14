@@ -32,6 +32,7 @@ class Runner(
     logger.info(s"n behaviours: ${config.behaviours.size}")
     logger.info(s"n agents: ${config.agents.size}")
     logger.info(s"Start time: ${start}")
+    logger.info(s"End time: ${end}")
     tickBetween(start, end)
 
   /** Tick starting from time 1.
