@@ -70,7 +70,9 @@ class Runner(
     * @since v0.0.1
     */
   def tick(time: Int): Unit =
+    logger.info(s"Day ${time} - perceiving beliefs")
     perceiveBeliefs(time)
+    logger.info(s"Day ${time} - performing actions")
     performActions(time)
 
   /** Perceive the beliefs for every agent.
