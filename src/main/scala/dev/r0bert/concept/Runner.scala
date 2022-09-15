@@ -4,6 +4,11 @@ import dev.r0bert.beliefspread.core.Agent
 
 import scala.util.Random
 import com.typesafe.scalalogging.Logger
+import play.api.libs.json.Json
+import dev.r0bert.concept.json.AgentSpec
+import java.io.BufferedWriter
+import java.io.FileWriter
+import java.io.File
 
 /** This runs the simulation.
   *
@@ -20,11 +25,12 @@ class Runner(
     logger: Logger = Logger("concept")
 ) {
 
-  /**
-    * Run the simulation between time start and end.
+  /** Run the simulation between time start and end.
     *
-    * @param start The start time.
-    * @param end The end time.
+    * @param start
+    *   The start time.
+    * @param end
+    *   The end time.
     */
   def run(start: Int, end: Int): Unit =
     logger.info("Starting concept")
@@ -35,6 +41,27 @@ class Runner(
     logger.info(s"End time: ${end}")
     tickBetween(start, end)
     logger.info(s"Ending concept")
+    serializeAgents()
+
+  /** Serialize the agents to a json file.
+    *
+    * Writes to [[CLIConfig.outputFile]]
+    *
+    * @author
+    *   Robert Greener
+    * @since v0.0.1
+    */
+  def serializeAgents(): Unit =
+    logger.info("Converting agents to JSON")
+    val specs = config.agents.map(AgentSpec.fromAgent(_)).toArray
+    val output =
+      Json.toJson(specs).toString()
+    logger.info("Creating output file")
+    val bw = BufferedWriter(FileWriter(config.outputFile))
+    logger.info(s"Writing output to ${config.outputFile.getPath()}")
+    bw.write(output)
+    bw.close()
+    logger.info("Writing agents complete")
 
   /** Tick starting from time 1.
     *
