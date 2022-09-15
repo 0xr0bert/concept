@@ -31,12 +31,9 @@ class Runner(
     *   The start time.
     * @param end
     *   The end time.
-<<<<<<< HEAD
-=======
     * @author
     *   Robert Greener
     * @since v0.0.1
->>>>>>> 2c69ba8 (Runner.run: Add @author and @since scaladoc)
     */
   def run(start: Int, end: Int): Unit =
     logger.info("Starting concept")
