@@ -121,6 +121,7 @@ import dev.r0bert.concept.performancerelationships.PerformanceRelationshipUtils.
 
   OParser.parse(parser, args, CLIConfig()) match {
     case Some(config) =>
-      println("Valid")
+      val runner = Runner(config)
+      runner.run(1, 2)
     case None => throw RuntimeException("The supplied data is incorrect")
   }
