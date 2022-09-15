@@ -8,7 +8,7 @@ lazy val root = project
     scalaVersion := scala3Version,
     libraryDependencies ++= Seq(
       "org.scalameta" %% "munit" % "1.0.0-M6" % Test,
-      "dev.r0bert" %% "beliefspread" % "0.15.1",
+      "dev.r0bert" %% "beliefspread" % "0.16.0",
       "com.github.scopt" %% "scopt" % "4.1.0",
       "com.typesafe.play" %% "play-json" % "2.10.0-RC6",
       "ch.qos.logback" % "logback-classic" % "1.4.0",
