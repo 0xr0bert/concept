@@ -640,4 +640,43 @@ class AgentSpecTest extends munit.FunSuite {
     assertEquals(a1.getFriendWeight(a2), Some(0.4))
     assertEquals(a1.getFriendWeight(a3), None)
   }
+
+  test("fromAgent") {
+    val agent = BasicAgent()
+
+    val friends = (1 to 10).map(_i => BasicAgent())
+    friends.foreach(agent.setFriendWeight(_, Some(0.1)))
+
+    val beliefs = (1 to 5).map(i => BasicBelief(s"b${i}"))
+    beliefs.foreach(b =>
+      agent.setActivation(1, b, Some(0.1))
+      agent.setActivation(2, b, Some(0.2))
+      agent.setDelta(b, Some(1.1))
+    )
+
+    val behaviours = (1 to 4).map(i => BasicBehaviour(s"b${i}"))
+    behaviours.zipWithIndex.foreach((b, i) => agent.setAction(i, Some(b)))
+
+    val spec = AgentSpec.fromAgent(agent)
+
+    assertEquals(spec.uuid, agent.uuid)
+    assertEquals(spec.actions.size, 4)
+    behaviours.zipWithIndex.foreach((b, i) =>
+      assertEquals(spec.actions(i), b.uuid)
+    )
+
+    assertEquals(spec.activations.size, 2)
+    assertEquals(spec.activations(1).size, 5)
+    assertEquals(spec.activations(2).size, 5)
+    assertEquals(spec.deltas.size, 5)
+
+    beliefs.foreach(b =>
+      assertEqualsDouble(spec.activations(1)(b.uuid), 0.1, 0.0001)
+      assertEqualsDouble(spec.activations(2)(b.uuid), 0.2, 0.0001)
+      assertEqualsDouble(spec.deltas(b.uuid), 1.1, 0.0001)
+    )
+
+    assertEquals(spec.friends.size, 10)
+    friends.foreach(f => assertEqualsDouble(spec.friends(f.uuid), 0.1, 0.0001))
+  }
 }

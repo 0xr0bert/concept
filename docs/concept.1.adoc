@@ -37,6 +37,9 @@ concept - Run a simulation which explores how beliefs and behaviours spread.
 *-p, --performance-relationships*=_file_::
     The performance relationships config JSON file, see prs.json(5).
 
+*-o, --output*=__file_::
+    The output file, storing the mutated agents.json(5).
+
 == Resources
 
 *Source code hosting*: https://github.com/0xr0bert/concept

@@ -8,6 +8,8 @@ import dev.r0bert.concept.performancerelationships.PerformanceRelationships
 
 /** The configuration for the command-line interface
   *
+  * @param outputFile
+  *   The output [[File]].
   * @param agents
   *   The [[BasicAgent]]s
   * @param behaviours
@@ -21,6 +23,7 @@ import dev.r0bert.concept.performancerelationships.PerformanceRelationships
   * @since v0.0.1
   */
 final case class CLIConfig(
+    outputFile: File = File("output.json"),
     agents: Array[BasicAgent] = Array(),
     behaviours: Array[BasicBehaviour] = Array(),
     beliefs: Array[BasicBelief] = Array(),

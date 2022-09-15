@@ -116,7 +116,18 @@ import dev.r0bert.concept.performancerelationships.PerformanceRelationshipUtils.
             )
           c.copy(performanceRelationships = prs)
         )
-        .text("The performance relationships config JSON file, see prs.json(5)")
+        .text(
+          "The performance relationships config JSON file, see prs.json(5)"
+        ),
+      opt[File]('o', "output")
+        .required()
+        .valueName("<file>")
+        .validate(file =>
+          if (!file.exists) success
+          else failure(s"$file already exists!")
+        )
+        .action((f, c) => c.copy(outputFile = f))
+        .text("The output file is a mutated agents.json(5)")
     )
 
   OParser.parse(parser, args, CLIConfig()) match {

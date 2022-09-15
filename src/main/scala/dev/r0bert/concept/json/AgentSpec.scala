@@ -100,4 +100,23 @@ object AgentSpec {
     */
   implicit val agentSpecFormat: Format[AgentSpec] =
     Json.using[Json.WithDefaultValues].format[AgentSpec]
+
+  /** Create a new [[AgentSpec]] from an [[Agent]].
+    *
+    * @param agent
+    *   The [[Agent]].
+    * @author
+    *   Robert Greener
+    * @since v0.0.1
+    */
+  def fromAgent(agent: Agent) =
+    AgentSpec(
+      agent.uuid,
+      agent.getActions.map((k, v) => (k, v.uuid)).toMap,
+      agent.getActivations
+        .map((k1, v1) => (k1, v1.map((k2, v2) => (k2.uuid, v2)).toMap))
+        .toMap,
+      agent.getDeltas.map((k, v) => (k.uuid, v)).toMap,
+      agent.getFriends().map((k, v) => (k.uuid, v)).toMap
+    )
 }
