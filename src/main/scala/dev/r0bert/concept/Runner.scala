@@ -3,17 +3,21 @@ package dev.r0bert.concept
 import dev.r0bert.beliefspread.core.Agent
 
 import scala.util.Random
+import com.typesafe.scalalogging.Logger
 
 /** This runs the simulation.
   *
   * @param config
   *   The [[CLIConfig]] of the simulation
+  * @param logger
+  *   The logger.
   * @author
   *   Robert Greener
   * @since v0.0.1
   */
 class Runner(
-    config: CLIConfig
+    config: CLIConfig,
+    logger: Logger = Logger("concept")
 ) {
 
   /**
@@ -22,8 +26,15 @@ class Runner(
     * @param start The start time.
     * @param end The end time.
     */
-  def run(start: Int, end: Int): Unit = 
+  def run(start: Int, end: Int): Unit =
+    logger.info("Starting concept")
+    logger.info(s"n beliefs: ${config.beliefs.size}")
+    logger.info(s"n behaviours: ${config.behaviours.size}")
+    logger.info(s"n agents: ${config.agents.size}")
+    logger.info(s"Start time: ${start}")
+    logger.info(s"End time: ${end}")
     tickBetween(start, end)
+    logger.info(s"Ending concept")
 
   /** Tick starting from time 1.
     *
@@ -59,7 +70,9 @@ class Runner(
     * @since v0.0.1
     */
   def tick(time: Int): Unit =
+    logger.info(s"Day ${time} - perceiving beliefs")
     perceiveBeliefs(time)
+    logger.info(s"Day ${time} - performing actions")
     performActions(time)
 
   /** Perceive the beliefs for every agent.
