@@ -1,4 +1,4 @@
-val scala3Version = "3.1.3"
+val scala3Version = "3.2.0"
 
 lazy val root = project
   .in(file("."))
@@ -12,7 +12,7 @@ lazy val root = project
       "com.github.scopt" %% "scopt" % "4.1.0",
       "com.typesafe.play" %% "play-json" % "2.10.0-RC6",
       "ch.qos.logback" % "logback-classic" % "1.4.0",
-      "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
+      "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
     )
   )
 scalacOptions := Seq("-unchecked", "-deprecation")
