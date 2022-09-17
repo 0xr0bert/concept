@@ -16,3 +16,8 @@ lazy val root = project
     )
   )
 scalacOptions := Seq("-unchecked", "-deprecation")
+
+ThisBuild / assemblyMergeStrategy := {
+  case "module-info.class" => MergeStrategy.discard
+  case x                   => assemblyMergeStrategy.value(x)
+}
