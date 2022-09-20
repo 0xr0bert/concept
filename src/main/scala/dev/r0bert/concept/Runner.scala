@@ -35,14 +35,14 @@ class Runner(
     *   Robert Greener
     * @since v0.0.1
     */
-  def run(start: Int, end: Int): Unit =
+  def run(): Unit =
     logger.info("Starting concept")
     logger.info(s"n beliefs: ${config.beliefs.size}")
     logger.info(s"n behaviours: ${config.behaviours.size}")
     logger.info(s"n agents: ${config.agents.size}")
-    logger.info(s"Start time: ${start}")
-    logger.info(s"End time: ${end}")
-    tickBetween(start, end)
+    logger.info(s"Start time: ${config.startTime}")
+    logger.info(s"End time: ${config.endTime}")
+    tickBetween(config.startTime, config.endTime)
     logger.info(s"Ending concept")
     serializeAgents()
 
