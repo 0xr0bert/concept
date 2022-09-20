@@ -132,7 +132,12 @@ import dev.r0bert.concept.performancerelationships.PerformanceRelationshipUtils.
         .required()
         .valueName("<integer>")
         .action((i, c) => c.copy(startTime = i))
-        .text("The simulation start time")
+        .text("The simulation start time"),
+      opt[Int]('e', "end")
+        .required()
+        .valueName("<integer>")
+        .action((i, c) => c.copy(endTime = i))
+        .text("The simulation end time")
     )
 
   OParser.parse(parser, args, CLIConfig()) match {
