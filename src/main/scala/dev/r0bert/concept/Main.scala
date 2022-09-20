@@ -127,7 +127,12 @@ import dev.r0bert.concept.performancerelationships.PerformanceRelationshipUtils.
           else failure(s"$file already exists!")
         )
         .action((f, c) => c.copy(outputFile = f))
-        .text("The output file is a mutated agents.json(5)")
+        .text("The output file is a mutated agents.json(5)"),
+      opt[Int]('s', "start")
+        .required()
+        .valueName("<integer>")
+        .action((i, c) => c.copy(startTime = i))
+        .text("The simulation start time")
     )
 
   OParser.parse(parser, args, CLIConfig()) match {
