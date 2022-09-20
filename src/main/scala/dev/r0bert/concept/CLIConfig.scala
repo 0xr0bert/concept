@@ -18,6 +18,10 @@ import dev.r0bert.concept.performancerelationships.PerformanceRelationships
   *   The [[BasicBelief]]s
   * @param performanceRelationships
   *   The [[PerformanceRelationships]]
+  * @param startTime
+  *   The simulation start time.
+  * @param endTime
+  *   The simulation end time.
   * @author
   *   Robert Greener
   * @since v0.0.1
@@ -27,5 +31,7 @@ final case class CLIConfig(
     agents: Array[BasicAgent] = Array(),
     behaviours: Array[BasicBehaviour] = Array(),
     beliefs: Array[BasicBelief] = Array(),
-    performanceRelationships: PerformanceRelationships = Map.empty
+    performanceRelationships: PerformanceRelationships = Map.empty,
+    startTime: Int = 1,
+    endTime: Int = 100
 )
