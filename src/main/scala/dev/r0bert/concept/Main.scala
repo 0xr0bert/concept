@@ -16,7 +16,7 @@ import dev.r0bert.concept.performancerelationships.PerformanceRelationshipUtils.
     import builder._
     OParser.sequence(
       programName("concept"),
-      head("concept", "v0.2.0"),
+      head("concept", "v0.3.0-SNAPSHOT"),
       version('V', "version")
         .text("Print the version information"),
       help('h', "help")

@@ -1,6 +1,6 @@
 = concept(1)
 Robert Greener
-v0.2.0
+v0.3.0-SNAPSHOT
 :doctype: manpage
 :manmanual: Concepts Manual
 :mansource: behaviours
