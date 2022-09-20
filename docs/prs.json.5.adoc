@@ -1,6 +1,6 @@
 = prs.json(5)
 Robert Greener
-v0.0.1
+v0.2.0
 :doctype: manpage
 :manmanual: Concepts Manual
 :mansource: prs
