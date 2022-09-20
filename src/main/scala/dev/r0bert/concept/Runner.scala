@@ -27,10 +27,6 @@ class Runner(
 
   /** Run the simulation between time start and end.
     *
-    * @param start
-    *   The start time.
-    * @param end
-    *   The end time.
     * @author
     *   Robert Greener
     * @since v0.0.1
