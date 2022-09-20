@@ -40,6 +40,12 @@ concept - Run a simulation which explores how beliefs and behaviours spread.
 *-o, --output*=__file_::
     The output file, storing the mutated agents.json(5).
 
+*-s, --start*=_integer_::
+    The simulation start time.
+
+*-e, --end*=_integer_::
+    The simulation end time.
+
 == Resources
 
 *Source code hosting*: https://github.com/0xr0bert/concept

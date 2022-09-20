@@ -16,7 +16,7 @@ import dev.r0bert.concept.performancerelationships.PerformanceRelationshipUtils.
     import builder._
     OParser.sequence(
       programName("concept"),
-      head("concept", "v0.1.0-SNAPSHOT"),
+      head("concept", "v0.2.0-SNAPSHOT"),
       version('V', "version")
         .text("Print the version information"),
       help('h', "help")
@@ -127,12 +127,22 @@ import dev.r0bert.concept.performancerelationships.PerformanceRelationshipUtils.
           else failure(s"$file already exists!")
         )
         .action((f, c) => c.copy(outputFile = f))
-        .text("The output file is a mutated agents.json(5)")
+        .text("The output file is a mutated agents.json(5)"),
+      opt[Int]('s', "start")
+        .required()
+        .valueName("<integer>")
+        .action((i, c) => c.copy(startTime = i))
+        .text("The simulation start time"),
+      opt[Int]('e', "end")
+        .required()
+        .valueName("<integer>")
+        .action((i, c) => c.copy(endTime = i))
+        .text("The simulation end time")
     )
 
   OParser.parse(parser, args, CLIConfig()) match {
     case Some(config) =>
       val runner = Runner(config)
-      runner.run(1, 2)
+      runner.run()
     case None => throw RuntimeException("The supplied data is incorrect")
   }
