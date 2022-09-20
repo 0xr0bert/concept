@@ -117,6 +117,11 @@ class Runner(
 
   /** Choose the action of an agent.
     *
+    * The basic method is that if there are no probabilities that are strictly
+    * positive then the agent chooses the least bad option.
+    *
+    * It then chooses between the positive ones based upon their probability.
+    *
     * @param agent
     *   The [[Agent]].
     * @param time
@@ -139,25 +144,33 @@ class Runner(
             .sum
         )
       )
-      .toMap
+      .sortBy(_._2)
 
-    val normalizingFactor = unnormalizedProbs.values.sum
-    val normalizedProbs =
-      unnormalizedProbs.view.mapValues(_ / normalizingFactor).toArray
-
-    val r = Random()
-    var rv = r.nextDouble()
-    var chosenBehaviour = normalizedProbs.last._1
-    breakable {
-      for ((behaviour, v) <- normalizedProbs) {
-        rv = rv - v
-        if (rv <= 0)
-          chosenBehaviour = behaviour
-          break
+    if (unnormalizedProbs.last._2 <= 0)
+      agent.setAction(time, Some(unnormalizedProbs.last._1))
+    else {
+      val filteredProbs = unnormalizedProbs.filter(_._2 > 0)
+      if (filteredProbs.size == 1)
+        agent.setAction(time, Some(filteredProbs.last._1))
+      else {
+        val mapProbs = filteredProbs.toMap
+        val normalizingFactor = mapProbs.values.sum
+        val normalizedProbs =
+          mapProbs.view.mapValues(_ / normalizingFactor).toArray
+        val r = Random()
+        var rv = r.nextDouble()
+        var chosenBehaviour = normalizedProbs.last._1
+        breakable {
+          for ((behaviour, v) <- normalizedProbs) {
+            rv = rv - v
+            if (rv <= 0)
+              chosenBehaviour = behaviour
+              break
+          }
+        }
+        agent.setAction(time, Some(chosenBehaviour))
       }
     }
-
-    agent.setAction(time, Some(chosenBehaviour))
 
   /** Perform the actions of all agents
     *
