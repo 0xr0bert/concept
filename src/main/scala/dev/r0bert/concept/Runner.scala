@@ -3,6 +3,7 @@ package dev.r0bert.concept
 import dev.r0bert.beliefspread.core.Agent
 
 import scala.util.Random
+import scala.util.control.Breaks._
 import com.typesafe.scalalogging.Logger
 import play.api.libs.json.Json
 import dev.r0bert.concept.json.AgentSpec
@@ -147,9 +148,13 @@ class Runner(
     val r = Random()
     var rv = r.nextDouble()
     var chosenBehaviour = normalizedProbs.last._1
-    for ((behaviour, v) <- normalizedProbs) {
-      rv = rv - v
-      if (rv <= 0) chosenBehaviour = behaviour
+    breakable {
+      for ((behaviour, v) <- normalizedProbs) {
+        rv = rv - v
+        if (rv <= 0)
+          chosenBehaviour = behaviour
+          break
+      }
     }
 
     agent.setAction(time, Some(chosenBehaviour))
